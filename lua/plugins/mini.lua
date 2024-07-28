@@ -9,13 +9,6 @@ return { -- Collection of various small independent plugins/modules
     --  - ci'  - [C]hange [I]nside [']quote
     require('mini.ai').setup { n_lines = 500 }
 
-    -- Add/delete/replace surroundings (brackets, quotes, etc.)
-    --
-    -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
-    -- - sd'   - [S]urround [D]elete [']quotes
-    -- - sr)'  - [S]urround [R]eplace [)] [']
-    require('mini.surround').setup()
-
     -- Simple and easy statusline.
     --  You could remove this setup call if you don't like it,
     --  and try some other statusline plugin
@@ -31,6 +24,60 @@ return { -- Collection of various small independent plugins/modules
       return '%2l:%-2v'
     end
 
+    ------------------------------------------------------------------------------
+
+    require('mini.indentscope').setup {
+      symbol = '│',
+      draw = {
+        animation = require('mini.indentscope').gen_animation.linear(),
+      },
+    }
+    vim.cmd [[hi MiniIndentscopeSymbol guifg=#ffaa2d gui=bold]]
+
+    ------------------------------------------------------------------------------
+
+    require('mini.move').setup {
+      mappings = {
+        left = 'H',
+        right = 'L',
+        down = 'J',
+        up = 'K',
+
+        line_left = '<S-left>',
+        line_right = '<S-right>',
+        line_down = '<S-down>',
+        line_up = '<S-up>',
+      },
+    }
+
+    ------------------------------------------------------------------------------
+
+    ------------------------------------------------------------------------------
+
+    require('mini.cursorword').setup {
+      delay = 250,
+    }
+
+    vim.cmd [[highlight MiniCursorword guifg=#00AFFF gui=bold]]
+    vim.cmd [[highlight MiniCursorwordCurrent guifg=#00afff gui=bold]]
+
+    ------------------------------------------------------------------------------
+
+    require('mini.surround').setup()
+    vim.keymap.set('n', 'si', 'sai', { silent = true, remap = true })
+    vim.keymap.set('x', 'q', "sa'", { silent = true, remap = true })
+    vim.keymap.set('x', 'Q', 'sa"', { silent = true, remap = true })
+    vim.keymap.set('x', "'", "sa'", { silent = true, remap = true })
+    vim.keymap.set('x', '"', 'sa"', { silent = true, remap = true })
+    vim.keymap.set('x', '(', 'sa)', { silent = true, remap = true })
+    vim.keymap.set('x', ')', 'sa)', { silent = true, remap = true })
+    vim.keymap.set('x', '}', 'sa}', { silent = true, remap = true })
+    vim.keymap.set('x', '{', 'sa}', { silent = true, remap = true })
+    vim.keymap.set('x', ']', 'sa]', { silent = true, remap = true })
+    vim.keymap.set('x', '[', 'sa]', { silent = true, remap = true })
+    vim.keymap.set('x', '`', 'sa`', { silent = true, remap = true })
+
+    ------------------------------------------------------------------------------
     -- ... and there is more!
     --  Check out: https://github.com/echasnovski/mini.nvim
   end,

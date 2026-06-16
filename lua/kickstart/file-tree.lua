@@ -118,4 +118,4 @@ require('nvim-tree').setup {
   },
 }
 
-vim.keymap.set('n', '<space>n', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle [N]vimTree' })
+vim.keymap.set('n', '<C-n>', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle [N]vimTree' })

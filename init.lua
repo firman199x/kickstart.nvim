@@ -333,6 +333,16 @@ do
     clangd = {
       cmd = { 'clangd' },
       filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' },
+      handlers = {
+        ['textDocument/publishDiagnostics'] = function(_, result, ctx, config)
+          if result.diagnostics then
+            result.diagnostics = vim.tbl_filter(function(d)
+              return d.severity == vim.diagnostic.severity.ERROR
+            end, result.diagnostics)
+          end
+          vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
+        end,
+      },
     },
     stylua = {},
     lua_ls = {
@@ -424,8 +434,8 @@ vim.keymap.set('n', '<leader>o', '<cmd>Oil<CR>', { desc = '[O]pen Oil file explo
 
 require('kickstart.cpp_lsp')
 require('kickstart.outline')
-require('kickstart.hop')
 require('kickstart.file-tree')
+require('kickstart.hop')
 require('kickstart.statusline')
 require('kickstart.terminal')
 

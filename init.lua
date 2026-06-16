@@ -179,167 +179,9 @@ do
   })
 end
 
--- ============================================================
--- SECTION 3: PLUGIN MANAGER BUILD HOOKS
--- ============================================================
-do
-
-  local function run_build(name, cmd, cwd)
-    local result = vim.system(cmd, { cwd = cwd }):wait()
-    if result.code ~= 0 then
-      local stderr = result.stderr or ''
-      local stdout = result.stdout or ''
-      local output = stderr ~= '' and stderr or stdout
-      if output == '' then output = 'No output from build command.' end
-      vim.notify(('Build failed for %s:\n%s'):format(name, output), vim.log.levels.ERROR)
-    end
-  end
-
-  -- This autocommand runs after a plugin is installed or updated and
-  --  runs the appropriate build command for that plugin if necessary.
-  --
-  -- See `:help vim.pack-events`
-  vim.api.nvim_create_autocmd('PackChanged', {
-    callback = function(ev)
-      local name = ev.data.spec.name
-      local kind = ev.data.kind
-      if kind ~= 'install' and kind ~= 'update' then return end
-
-      if name == 'telescope-fzf-native.nvim' and vim.fn.executable 'make' == 1 then
-        run_build(name, { 'make' }, ev.data.path)
-        return
-      end
-
-      if name == 'LuaSnip' then
-        if vim.fn.has 'win32' ~= 1 and vim.fn.executable 'make' == 1 then run_build(name, { 'make', 'install_jsregexp' }, ev.data.path) end
-        return
-      end
-
-      if name == 'nvim-treesitter' then
-        if not ev.data.active then vim.cmd.packadd 'nvim-treesitter' end
-        vim.cmd 'TSUpdate'
-        return
-      end
-    end,
-  })
-end
-
----Because most plugins are hosted on GitHub, you can use the helper
----function to have less repetition in the following sections.
----@param repo string
----@return string
 local function gh(repo) return 'https://github.com/' .. repo end
 
--- ============================================================
--- SECTION 4: UI / CORE UX PLUGINS
--- guess-indent, gitsigns, which-key, colorscheme, todo-comments, mini modules
--- ============================================================
-do
-  -- [[ Installing and Configuring Plugins ]]
-  --
-  -- To install a plugin simply call `vim.pack.add` with its git url.
-  -- This will download the default branch of the plugin, which will usually be `main` or `master`
-  -- You can also have more advanced specs, which we will talk about later.
-  --
-  -- For most plugins its not enough to install them, you also need to call their `.setup()` to start them.
-  --
-  -- Gitsigns: git signs in the gutter
-  --
-  -- See `:help gitsigns` to understand what each configuration key does.
-  -- Adds git related signs to the gutter, as well as utilities for managing changes
-  vim.pack.add { gh 'lewis6991/gitsigns.nvim' }
-  require('gitsigns').setup {
-    signs = {
-      add = { text = '+' }, ---@diagnostic disable-line: missing-fields
-      change = { text = '~' }, ---@diagnostic disable-line: missing-fields
-      delete = { text = '_' }, ---@diagnostic disable-line: missing-fields
-      topdelete = { text = '‾' }, ---@diagnostic disable-line: missing-fields
-      changedelete = { text = '~' }, ---@diagnostic disable-line: missing-fields
-    },
-  }
-
-  -- Useful plugin to show you pending keybinds.
-  vim.pack.add { gh 'folke/which-key.nvim' }
-  require('which-key').setup {
-    -- Delay between pressing a key and opening which-key (milliseconds)
-    delay = 0,
-    icons = { mappings = vim.g.have_nerd_font },
-    -- Document existing key chains
-    spec = {
-      { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
-      { '<leader>t', group = '[T]oggle' },
-      { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
-      { 'gr', group = 'LSP Actions', mode = { 'n' } },
-    },
-  }
-
-  -- [[ Colorscheme ]]
-  -- You can easily change to a different colorscheme.
-  -- Change the name of the colorscheme plugin below, and then
-  -- change the command under that to load whatever the name of that colorscheme is.
-  --
-  -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  vim.pack.add { gh 'folke/tokyonight.nvim' }
-  ---@diagnostic disable-next-line: missing-fields
-  require('tokyonight').setup {
-    styles = {
-      comments = { italic = false }, -- Disable italics in comments
-    },
-  }
-
-  -- Load the colorscheme here.
-  -- Like many other themes, this one has different styles, and you could load
-  -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-  vim.cmd.colorscheme 'tokyonight-night'
-  -- [[ mini.nvim ]]
-  --  A collection of various small independent plugins/modules
-  vim.pack.add { gh 'nvim-mini/mini.nvim' }
-
-  -- If a nerd font is available, load the icons module for pretty icons in various plugins.
-  if vim.g.have_nerd_font then
-    require('mini.icons').setup()
-    -- Used for backwards compatibility with plugins that require `nvim-web-devicons` (e.g. telescope.nvim)
-    MiniIcons.mock_nvim_web_devicons()
-  end
-
-  -- Better Around/Inside textobjects
-  --
-  -- Examples:
-  --  - va)  - [V]isually select [A]round [)]paren
-  --  - yiiq - [Y]ank [I]nside [I]+1 [Q]uote
-  --  - ci'  - [C]hange [I]nside [']quote
-  require('mini.ai').setup {
-    -- NOTE: Avoid conflicts with the built-in incremental selection mappings on Neovim>=0.12 (see `:help treesitter-incremental-selection`)
-    mappings = {
-      around_next = 'aa',
-      inside_next = 'ii',
-    },
-    n_lines = 500,
-  }
-
-  -- Add/delete/replace surroundings (brackets, quotes, etc.)
-  --
-  -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
-  -- - sd'   - [S]urround [D]elete [']quotes
-  -- - sr)'  - [S]urround [R]eplace [)] [']
-  require('mini.surround').setup()
-
-  -- Simple and easy statusline.
-  --  You could remove this setup call if you don't like it,
-  --  and try some other statusline plugin
-  local statusline = require 'mini.statusline'
-  -- Set `use_icons` to true if you have a Nerd Font
-  statusline.setup { use_icons = vim.g.have_nerd_font }
-
-  -- You can configure sections in the statusline by overriding their
-  -- default behavior. For example, here we set the section for
-  -- cursor location to LINE:COLUMN
-  ---@diagnostic disable-next-line: duplicate-set-field
-  statusline.section_location = function() return '%2l:%-2v' end
-
-  -- ... and there is more!
-  --  Check out: https://github.com/nvim-mini/mini.nvim
-end
+vim.cmd.colorscheme 'default'
 
 -- ============================================================
 -- SECTION 5: SEARCH & NAVIGATION
@@ -366,7 +208,7 @@ do
   -- See `:help telescope.builtin`
   local builtin = require 'telescope.builtin'
   vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[S]earch [F]iles' })
-  vim.keymap.set('n', '<leader>/', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+  vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
 
   vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('telescope-lsp-attach', { clear = true }),
@@ -477,7 +319,9 @@ do
       --
       -- This may be unwanted, since they displace some of your code
       if client and client:supports_method('textDocument/inlayHint', event.buf) then
-        map('<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, '[T]oggle Inlay [H]ints')
+        vim.keymap.set('n', '<leader>th', function()
+          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
+        end, { buffer = event.buf, desc = '[T]oggle Inlay [H]ints' })
       end
     end,
   })
@@ -486,6 +330,10 @@ do
   --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
   --  See `:help lsp-config` for information about keys and how to configure
   local servers = {
+    clangd = {
+      cmd = { 'clangd' },
+      filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' },
+    },
     stylua = {},
     lua_ls = {
       on_init = function(client)
@@ -519,54 +367,16 @@ do
   end
 end
 
--- ============================================================
--- SECTION 7: FORMATTING
--- ============================================================
-do
-  vim.pack.add { gh 'stevearc/conform.nvim' }
-  require('conform').setup {
-    notify_on_error = false,
-    default_format_opts = { lsp_format = 'fallback' },
-  }
+vim.pack.add { { src = gh 'saghen/blink.cmp', version = vim.version.range '1.*' } }
+require('blink.cmp').setup {
+  keymap = {
+    ['<C-j>'] = { 'select_next' },
+    ['<C-k>'] = { 'select_prev' },
+    ['<Tab>'] = { 'accept' },
+  },
+  appearance = { nerd_font_variant = 'mono' },
+  completion = { documentation = { auto_show = false } },
+  sources = { default = { 'lsp', 'path' } },
+  fuzzy = { implementation = 'lua' },
+}
 
-  vim.keymap.set({ 'n', 'v' }, '<leader>f', function() require('conform').format { async = true } end, { desc = '[F]ormat buffer' })
-end
-
--- ============================================================
--- SECTION 8: AUTOCOMPLETE & SNIPPETS
--- ============================================================
-do
-  vim.pack.add { { src = gh 'L3MON4D3/LuaSnip', version = vim.version.range '2.*' } }
-  require('luasnip').setup {}
-
-  vim.pack.add { { src = gh 'saghen/blink.cmp', version = vim.version.range '1.*' } }
-  require('blink.cmp').setup {
-    keymap = { preset = 'default' },
-    appearance = { nerd_font_variant = 'mono' },
-    completion = { documentation = { auto_show = false } },
-    sources = { default = { 'lsp', 'path', 'snippets' } },
-    snippets = { preset = 'luasnip' },
-    fuzzy = { implementation = 'lua' },
-    signature = { enabled = true },
-  }
-end
-
--- ============================================================
--- SECTION 9: TREESITTER
--- Minimal setup: no auto-install, zero build errors
--- ============================================================
-do
-  vim.pack.add { { src = gh 'nvim-treesitter/nvim-treesitter', version = 'main' } }
-
-  vim.api.nvim_create_autocmd('FileType', {
-    callback = function(args)
-      local lang = vim.treesitter.language.get_lang(args.match)
-      if lang and pcall(vim.treesitter.start, args.buf, lang) then
-        local ok, has_indent = pcall(vim.treesitter.query.get, lang, 'indents')
-        if ok and has_indent then
-          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-        end
-      end
-    end,
-  })
-end

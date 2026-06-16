@@ -405,3 +405,12 @@ require('blink.cmp').setup {
   fuzzy = { implementation = 'lua' },
 }
 
+vim.pack.add { gh 'stevearc/oil.nvim' }
+require('oil').setup {
+  view_options = { show_hidden = true },
+}
+vim.keymap.set('n', '<leader>o', '<cmd>Oil<CR>', { desc = '[O]pen Oil file explorer' })
+
+require('kickstart.statusline')
+require('kickstart.terminal')
+

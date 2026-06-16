@@ -394,8 +394,10 @@ vim.keymap.set({ 'n', 'x' }, '<leader>sa', function() require('scissors').addNew
 vim.pack.add { { src = gh 'saghen/blink.cmp', version = vim.version.range '1.*' } }
 require('blink.cmp').setup {
   keymap = {
-    ['<C-j>'] = { 'select_next' },
-    ['<C-k>'] = { 'select_prev' },
+    ['<C-j>'] = { 'select_next', 'fallback' },
+    ['<Down>'] = { 'select_next', 'fallback' },
+    ['<C-k>'] = { 'select_prev', 'fallback' },
+    ['<Up>'] = { 'select_prev', 'fallback' },
     ['<Tab>'] = { 'select_and_accept', 'snippet_forward', 'fallback' },
   },
   appearance = { nerd_font_variant = 'mono' },
@@ -403,6 +405,15 @@ require('blink.cmp').setup {
   sources = { default = { 'lsp', 'path', 'snippets' } },
   snippets = { preset = 'luasnip' },
   fuzzy = { implementation = 'lua' },
+  cmdline = {
+    keymap = {
+      ['<Tab>'] = { 'select_and_accept', 'fallback' },
+      ['<Up>'] = { 'select_prev', 'fallback' },
+      ['<Down>'] = { 'select_next', 'fallback' },
+    },
+    sources = { 'buffer', 'cmdline' },
+    completion = { menu = { auto_show = true } },
+  },
 }
 
 vim.pack.add { gh 'stevearc/oil.nvim' }
@@ -413,6 +424,8 @@ vim.keymap.set('n', '<leader>o', '<cmd>Oil<CR>', { desc = '[O]pen Oil file explo
 
 require('kickstart.cpp_lsp')
 require('kickstart.outline')
+require('kickstart.hop')
+require('kickstart.file-tree')
 require('kickstart.statusline')
 require('kickstart.terminal')
 

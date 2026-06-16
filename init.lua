@@ -411,6 +411,16 @@ require('oil').setup {
 }
 vim.keymap.set('n', '<leader>o', '<cmd>Oil<CR>', { desc = '[O]pen Oil file explorer' })
 
+require('kickstart.cpp_lsp')
+require('kickstart.outline')
 require('kickstart.statusline')
 require('kickstart.terminal')
+
+vim.pack.add { 'https://github.com/tpope/vim-fugitive' }
+vim.keymap.set('n', '<tab><tab>l', '3X', { noremap = true, silent = true })
+vim.keymap.set('n', '<tab><tab>h', '2X', { noremap = true, silent = true })
+vim.api.nvim_create_autocmd('CmdlineEnter', {
+  pattern = ':Git',
+  callback = function() vim.cmd 'silent! LspStop' end,
+})
 

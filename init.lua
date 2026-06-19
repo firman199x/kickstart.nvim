@@ -284,7 +284,7 @@ do
 			vim.notify("Not in a git repository", vim.log.levels.WARN)
 			return
 		end
-		require("fff").live_grep({ cwd = git_root })
+		require("fff").live_grep({ cwd = git_root, title = "Grep (Git Root)" })
 	end, { desc = "[G]rep from [G]it [R]oot" })
 
 	vim.api.nvim_create_autocmd("LspAttach", {

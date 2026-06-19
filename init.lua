@@ -207,6 +207,27 @@ local function gh(repo)
 	return "https://github.com/" .. repo
 end
 
+local function gitbrowse()
+	local git_root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("%s+$", "")
+	if git_root == "" then return vim.notify("Not in a git repo", vim.log.levels.WARN) end
+
+	local file = vim.fn.expand("%:p")
+	local rel = file:sub(#git_root + 2)
+	local line = vim.fn.line(".")
+	local branch = vim.fn.system("git rev-parse --abbrev-ref HEAD 2>/dev/null"):gsub("%s+$", "")
+	if branch == "" then branch = "HEAD" end
+
+	local remote = vim.fn.system("git remote get-url origin 2>/dev/null"):gsub("%s+$", "")
+	local repo_path = remote:gsub("^git@github%.com:", ""):gsub("^https://github%.com/", ""):gsub("%.git$", "")
+	if repo_path == "" or repo_path == remote then
+		return vim.notify("Could not parse GitHub remote", vim.log.levels.WARN)
+	end
+
+	local url = string.format("https://github.com/%s/blob/%s/%s#L%d", repo_path, branch, rel, line)
+	vim.fn.setreg("+", url)
+	vim.notify("Copied: " .. url, vim.log.levels.INFO)
+end
+
 vim.cmd.colorscheme("default")
 
 -- ============================================================
@@ -263,6 +284,8 @@ do
 		require("fff").live_grep({ cwd = git_root })
 	end, { desc = "[G]rep from [G]it [R]oot" })
 
+	vim.keymap.set("n", "<leader>gh", gitbrowse, { desc = "Open on [G]it[H]ub" })
+	vim.api.nvim_create_user_command("GitBrowse", gitbrowse, {})
 
 	vim.api.nvim_create_autocmd("LspAttach", {
 		group = vim.api.nvim_create_augroup("telescope-lsp-attach", { clear = true }),

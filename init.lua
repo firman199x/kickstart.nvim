@@ -40,6 +40,7 @@ end
 do
 	-- [[ Basic Keymaps ]]
 	--  See `:help vim.keymap.set()`
+	vim.keymap.set("n", "zx", "zt")
 
 	vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 	vim.keymap.set("n", "<C-q>", ":qa<CR>", { silent = true })
@@ -153,7 +154,6 @@ do
 	end
 	vim.keymap.set("n", "<F1>", [[:lua AppendCurrentWordToSearch()<CR>]], { noremap = true })
 
-
 	-- Diagnostic Config & Keymaps
 	--  See `:help vim.diagnostic.Opts`
 	vim.diagnostic.config({
@@ -235,8 +235,12 @@ do
 
 	-- See `:help telescope.builtin`
 	local builtin = require("telescope.builtin")
+	vim.keymap.set("n", "<leader>:", ":Telescope<CR>", {})
 	vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "[S]earch [F]iles" })
-	vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
+	vim.keymap.set("n", "<leader>/", builtin.live_grep, { desc = "[S]earch by [G]rep" })
+	vim.keymap.set("n", "<leader>//", function()
+		builtin.live_grep({ grep_open_files = true, prompt_title = "Live Grep in Open Files" })
+	end, { desc = "[S]earch [/] in Open Files" })
 
 	vim.api.nvim_create_autocmd("LspAttach", {
 		group = vim.api.nvim_create_augroup("telescope-lsp-attach", { clear = true }),
@@ -248,21 +252,6 @@ do
 			vim.keymap.set("n", "K", builtin.lsp_document_symbols, { buffer = buf, desc = "Open Document Symbols" })
 		end,
 	})
-
-	vim.keymap.set("n", "<leader>/", function()
-		builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-			winblend = 10,
-			previewer = false,
-		}))
-	end, { desc = "[/] Fuzzily search in current buffer" })
-
-	vim.keymap.set("n", "<leader>s/", function()
-		builtin.live_grep({ grep_open_files = true, prompt_title = "Live Grep in Open Files" })
-	end, { desc = "[S]earch [/] in Open Files" })
-
-	vim.keymap.set("n", "<leader>sn", function()
-		builtin.find_files({ cwd = vim.fn.stdpath("config"), follow = true })
-	end, { desc = "[S]earch [N]eovim files" })
 end
 
 -- ============================================================

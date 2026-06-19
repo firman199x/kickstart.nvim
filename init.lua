@@ -218,12 +218,28 @@ do
 		gh("nvim-lua/plenary.nvim"),
 		gh("nvim-telescope/telescope.nvim"),
 		gh("nvim-telescope/telescope-ui-select.nvim"),
+		gh("dmtrKovalenko/fff"),
 	}
 	if vim.fn.executable("make") == 1 then
 		table.insert(telescope_plugins, gh("nvim-telescope/telescope-fzf-native.nvim"))
 	end
 
 	vim.pack.add(telescope_plugins)
+
+	vim.api.nvim_create_autocmd("PackChanged", {
+		group = vim.api.nvim_create_augroup("fff-build", { clear = true }),
+		callback = function(ev)
+			local name, kind = ev.data.spec.name, ev.data.kind
+			if name == "fff" and (kind == "install" or kind == "update") then
+				if not ev.data.active then vim.cmd.packadd("fff") end
+				require("fff.download").download_or_build_binary()
+			end
+		end,
+	})
+
+	vim.g.fff = {
+		lazy_sync = true,
+	}
 
 	require("telescope").setup({
 		extensions = {
@@ -235,12 +251,18 @@ do
 
 	-- See `:help telescope.builtin`
 	local builtin = require("telescope.builtin")
-	vim.keymap.set("n", "<leader>:", ":Telescope<CR>", {})
-	vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "[S]earch [F]iles" })
-	vim.keymap.set("n", "<leader>/", builtin.live_grep, { desc = "[S]earch by [G]rep" })
+
+	vim.keymap.set("n", "<leader>ff", function() require("fff").find_files() end, { desc = "[F]ind [F]iles" })
+	vim.keymap.set("n", "<leader>/", function() require("fff").live_grep() end, { desc = "[S]earch by [G]rep" })
 	vim.keymap.set("n", "<leader>//", function()
-		builtin.live_grep({ grep_open_files = true, prompt_title = "Live Grep in Open Files" })
-	end, { desc = "[S]earch [/] in Open Files" })
+		local git_root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("%s+$", "")
+		if git_root == "" then
+			vim.notify("Not in a git repository", vim.log.levels.WARN)
+			return
+		end
+		require("fff").live_grep({ cwd = git_root })
+	end, { desc = "[G]rep from [G]it [R]oot" })
+
 
 	vim.api.nvim_create_autocmd("LspAttach", {
 		group = vim.api.nvim_create_augroup("telescope-lsp-attach", { clear = true }),

@@ -227,6 +227,9 @@ local function gitbrowse()
 	vim.fn.setreg("+", url)
 	vim.notify("Copied: " .. url, vim.log.levels.INFO)
 end
+vim.keymap.set("n", "<leader>gh", gitbrowse, { desc = "Open on [G]it[H]ub" })
+vim.api.nvim_create_user_command("GitBrowse", gitbrowse, {})
+
 
 vim.cmd.colorscheme("default")
 
@@ -283,9 +286,6 @@ do
 		end
 		require("fff").live_grep({ cwd = git_root })
 	end, { desc = "[G]rep from [G]it [R]oot" })
-
-	vim.keymap.set("n", "<leader>gh", gitbrowse, { desc = "Open on [G]it[H]ub" })
-	vim.api.nvim_create_user_command("GitBrowse", gitbrowse, {})
 
 	vim.api.nvim_create_autocmd("LspAttach", {
 		group = vim.api.nvim_create_augroup("telescope-lsp-attach", { clear = true }),

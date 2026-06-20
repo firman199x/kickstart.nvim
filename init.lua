@@ -535,6 +535,7 @@ require("kickstart.file-tree")
 require("kickstart.hop")
 require("kickstart.statusline")
 require("kickstart.terminal")
+require("kickstart.markdown")
 
 vim.pack.add({ "https://github.com/tpope/vim-fugitive" })
 vim.keymap.set("n", "<tab><tab>l", "3X", { noremap = true, silent = true })

@@ -303,6 +303,15 @@ do
 	local builtin = require("telescope.builtin")
 
 	vim.keymap.set("n", "<leader>ff", function() require("fff").find_files() end, { desc = "[F]ind [F]iles" })
+	vim.keymap.set("n", "<leader>fg", function()
+		local git_root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("%s+$", "")
+		if git_root == "" then
+			vim.notify("Not in a git repository", vim.log.levels.WARN)
+			return
+		end
+		require("fff").find_files({ cwd = git_root, title = "Grep (Git Root)" })
+	end, {})
+
 	vim.keymap.set("n", "<leader>/", function() require("fff").live_grep() end, { desc = "[S]earch by [G]rep" })
 	vim.keymap.set("n", "<leader>//", function()
 		local git_root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("%s+$", "")
@@ -535,7 +544,7 @@ require("kickstart.file-tree")
 require("kickstart.hop")
 require("kickstart.statusline")
 require("kickstart.terminal")
-require("kickstart.markdown")
+-- require("kickstart.markdown")
 
 vim.pack.add({ "https://github.com/tpope/vim-fugitive" })
 vim.keymap.set("n", "<tab><tab>l", "3X", { noremap = true, silent = true })

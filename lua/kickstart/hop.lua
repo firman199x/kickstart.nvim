@@ -1,7 +1,25 @@
-local ok = pcall(vim.pack.add, { 'https://github.com/swaits/tiny-jump.nvim' })
-if ok then
-  require('tiny-jump').setup {
-    labels = 'fjdkslahgeiruowmcnvptyqxzb',
-  }
-  vim.keymap.set('n', 'f', function() require('tiny-jump').start() end, { desc = 'Tiny jump' })
-end
+vim.pack.add({
+    {
+        src = "https://github.com/folke/flash.nvim",
+    },
+})
+
+require("flash").setup({
+    labels = "lkjsdf.,mxcv",
+    modes = {
+        search = {
+            enabled = true,
+        },
+        char = {
+            enabled = false, -- don't override f/F/t/T
+        },
+    },
+})
+
+vim.keymap.set("n", "f", function()
+    require("flash").jump({
+        search = {
+            mode = "search",
+        },
+    })
+end, { silent = true, desc = "Flash Word" })

@@ -33,6 +33,7 @@ local function createClangDFile()
   if file then file:close(); return end
 
   file = io.open('.clangd', 'w')
+  if not file then return end
   file:write [[
 CompileFlags:
   Add:

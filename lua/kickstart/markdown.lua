@@ -33,6 +33,7 @@ vim.keymap.set("n", "gd", "<cmd>ObsidianFollowLink<cr>", { silent = true, norema
 vim.keymap.set("n", "gt", "<cmd>ObsidianTags<cr>", { silent = true, noremap = true })
 
 local presets = require 'markview.presets'
+---@diagnostic disable: missing-fields
 require('markview').setup {
   markdown = {
     headings = presets.headings.glow,
@@ -40,5 +41,6 @@ require('markview').setup {
     tables = presets.tables.rounded,
   },
 }
+---@diagnostic enable: missing-fields
 
-require('markdown').setup({})
+require('markdown').setup()

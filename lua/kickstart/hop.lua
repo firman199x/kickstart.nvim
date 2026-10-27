@@ -8,7 +8,7 @@ require("flash").setup({
     labels = "lkjsdf.,mxcv",
     modes = {
         search = {
-            enabled = true,
+            enabled = false,
         },
         char = {
             enabled = false, -- don't override f/F/t/T

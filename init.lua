@@ -293,6 +293,12 @@ do
 		lazy_sync = true,
 	}
 
+    require("fff").setup({
+        grep = {
+            modes = { "regex" },
+        },
+    })
+
 	require("telescope").setup({
 		extensions = {
 			["ui-select"] = { require("telescope.themes").get_dropdown() },

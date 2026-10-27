@@ -1,25 +1,10 @@
 vim.pack.add({
-    {
-        src = "https://github.com/folke/flash.nvim",
-    },
+    { src = "https://github.com/Borber/hop.nvim", enabled = false },
 })
 
-require("flash").setup({
-    labels = "lkjsdf.,mxcv",
-    modes = {
-        search = {
-            enabled = false,
-        },
-        char = {
-            enabled = false, -- don't override f/F/t/T
-        },
-    },
+require('hop').setup({
+    multi_windows = false,
+    keys = 'lkjsdf.,mxcv'
 })
 
-vim.keymap.set("n", "f", function()
-    require("flash").jump({
-        search = {
-            mode = "search",
-        },
-    })
-end, { silent = true, desc = "Flash Word" })
+vim.keymap.set('n', 'f', ':HopWord<cr>', { remap = true, silent = true })

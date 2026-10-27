@@ -295,7 +295,7 @@ do
 
     require("fff").setup({
         grep = {
-            modes = { "regex" },
+            modes = { "regex", "fuzzy", "plain" },
         },
     })
 

@@ -44,3 +44,17 @@ require('markview').setup {
 ---@diagnostic enable: missing-fields
 
 require('markdown').setup()
+
+
+-- vim.pack.add({
+--     { src = "https://github.com/blackhat-7/vellum.nvim" },
+-- })
+--
+-- vim.api.nvim_create_autocmd("FileType", {
+--     pattern = "markdown",
+--     callback = function()
+--         -- Plugin-specific setup (opts = {})
+--     end,
+-- })
+--
+-- vim.keymap.set('n', '<leader>mp', '<cmd>Vellum<cr>', { desc = 'Markdown preview' })

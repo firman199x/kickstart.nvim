@@ -4,20 +4,13 @@ end
 
 -- ============================================================
 -- SECTION 5: SEARCH & NAVIGATION
--- Telescope setup, keymaps, LSP picker mappings
+-- fff for file finding/grep, mini.pick for LSP pickers & ui-select
 -- ============================================================
 do
-	local telescope_plugins = {
-		gh("nvim-lua/plenary.nvim"),
-		gh("nvim-telescope/telescope.nvim"),
-		gh("nvim-telescope/telescope-ui-select.nvim"),
+	vim.pack.add({
 		gh("dmtrKovalenko/fff"),
-	}
-	if vim.fn.executable("make") == 1 then
-		table.insert(telescope_plugins, gh("nvim-telescope/telescope-fzf-native.nvim"))
-	end
-
-	vim.pack.add(telescope_plugins)
+		gh("echasnovski/mini.nvim"),
+	})
 
 	vim.api.nvim_create_autocmd("PackChanged", {
 		group = vim.api.nvim_create_augroup("fff-build", { clear = true }),
@@ -34,22 +27,21 @@ do
 		lazy_sync = true,
 	}
 
-    require("fff").setup({
-        grep = {
-            modes = { "regex", "fuzzy", "plain" },
-        },
-    })
-
-	require("telescope").setup({
-		extensions = {
-			["ui-select"] = { require("telescope.themes").get_dropdown() },
+	require("fff").setup({
+		grep = {
+			modes = { "regex", "fuzzy", "plain" },
 		},
 	})
-	pcall(require("telescope").load_extension, "fzf")
-	pcall(require("telescope").load_extension, "ui-select")
 
-	-- See `:help telescope.builtin`
-	local builtin = require("telescope.builtin")
+	require("mini.pick").setup()
+	require("mini.extra").setup()
+
+	-- LSP picker helper via mini.extra
+	local builtin_lsp = function(scope)
+		return function()
+			require("mini.extra").pickers.lsp({ scope = scope })
+		end
+	end
 
 	vim.keymap.set("n", "<leader>ff", function() require("fff").find_files() end, { desc = "[F]ind [F]iles" })
 	vim.keymap.set("n", "<leader>fg", function()
@@ -60,7 +52,6 @@ do
 		end
 		require("fff").find_files({ cwd = git_root, title = "Grep (Git Root)" })
 	end, {})
-
 	vim.keymap.set("n", "<leader>/", function() require("fff").live_grep() end, { desc = "[S]earch by [G]rep" })
 	vim.keymap.set("n", "<leader>//", function()
 		local git_root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("%s+$", "")
@@ -72,12 +63,11 @@ do
 	end, { desc = "[G]rep from [G]it [R]oot" })
 
 	vim.api.nvim_create_autocmd("LspAttach", {
-		group = vim.api.nvim_create_augroup("telescope-lsp-attach", { clear = true }),
+		group = vim.api.nvim_create_augroup("mini-lsp-attach", { clear = true }),
 		callback = function(event)
 			local buf = event.buf
-			vim.keymap.set("n", "gr", builtin.lsp_references, { buffer = buf, desc = "[G]oto [R]eferences" })
-			vim.keymap.set("n", "gd", builtin.lsp_definitions, { buffer = buf, desc = "[G]oto [D]efinition" })
-			vim.keymap.set("n", "K", builtin.lsp_document_symbols, { buffer = buf, desc = "Open Document Symbols" })
+			vim.keymap.set("n", "gr", builtin_lsp("references"), { buffer = buf, desc = "[G]oto [R]eferences" })
+			vim.keymap.set("n", "gd", builtin_lsp("definition"), { buffer = buf, desc = "[G]oto [D]efinition" })
 		end,
 	})
 end

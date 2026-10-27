@@ -2,7 +2,9 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 vim.pack.add { 'https://github.com/nvim-tree/nvim-tree.lua' }
-vim.pack.add { 'https://github.com/nvim-tree/nvim-web-devicons' }
+vim.pack.add { 'https://github.com/echasnovski/mini.nvim' }
+require('mini.icons').setup()
+require('mini.icons').mock_nvim_web_devicons()
 
 local function on_attach(bufnr)
   local api = require 'nvim-tree.api'

@@ -311,7 +311,6 @@ do
 		callback = function(event)
 			local buf = event.buf
 			vim.keymap.set("n", "gr", builtin.lsp_references, { buffer = buf, desc = "[G]oto [R]eferences" })
-			-- vim.keymap.set('n', 'gri', builtin.lsp_implementations, { buffer = buf, desc = '[G]oto [I]mplementation' })
 			vim.keymap.set("n", "gd", builtin.lsp_definitions, { buffer = buf, desc = "[G]oto [D]efinition" })
 			vim.keymap.set("n", "K", builtin.lsp_document_symbols, { buffer = buf, desc = "Open Document Symbols" })
 		end,
@@ -545,7 +544,6 @@ vim.api.nvim_create_autocmd("CmdlineEnter", {
 vim.pack.add({ gh("echasnovski/mini.nvim") })
 
 require("mini.indentscope").setup({
-	-- symbol = '│',
 	symbol = "|",
 	draw = {
 		animation = require("mini.indentscope").gen_animation.none(),

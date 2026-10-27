@@ -9,14 +9,19 @@ vim.pack.add({
   gh("tadmccorkle/markdown.nvim"),
 })
 
-local ok, treesitter = pcall(require, "nvim-treesitter.configs")
-if ok then
-  treesitter.setup({
-    ensure_installed = { "markdown", "markdown_inline" },
-    auto_install = true,
-    highlight = { enable = true },
-  })
-end
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    local ok, treesitter = pcall(require, "nvim-treesitter.configs")
+    if ok then
+      treesitter.setup({
+        ensure_installed = { "markdown", "markdown_inline" },
+        auto_install = true,
+        highlight = { enable = true },
+      })
+    end
+  end,
+})
 
 require('obsidian').setup({
   workspaces = {
@@ -32,16 +37,20 @@ vim.keymap.set("n", "<BS>", "<cmd>ObsidianBacklinks<cr>", { silent = true, norem
 vim.keymap.set("n", "gd", "<cmd>ObsidianFollowLink<cr>", { silent = true, noremap = true })
 vim.keymap.set("n", "gt", "<cmd>ObsidianTags<cr>", { silent = true, noremap = true })
 
-local presets = require 'markview.presets'
----@diagnostic disable: missing-fields
-require('markview').setup {
-  markdown = {
-    headings = presets.headings.glow,
-    horizontal_rules = presets.horizontal_rules.dotted,
-    tables = presets.tables.rounded,
-  },
-}
----@diagnostic enable: missing-fields
-
-require('markdown').setup()
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    local presets = require 'markview.presets'
+    ---@diagnostic disable: missing-fields
+    require('markview').setup {
+      markdown = {
+        headings = presets.headings.glow,
+        horizontal_rules = presets.horizontal_rules.dotted,
+        tables = presets.tables.rounded,
+      },
+    }
+    ---@diagnostic enable: missing-fields
+    require('markdown').setup()
+  end,
+})
 

@@ -521,6 +521,8 @@ require("blink.cmp").setup({
 	},
 })
 
+vim.pack.add({ gh("echasnovski/mini.nvim") })
+
 require("kickstart.cpp_lsp")
 require("kickstart.outline")
 require("kickstart.file-tree")
@@ -541,7 +543,6 @@ vim.api.nvim_create_autocmd("CmdlineEnter", {
 
 --------------------- MINI -------------------
 
-vim.pack.add({ gh("echasnovski/mini.nvim") })
 
 require("mini.indentscope").setup({
 	symbol = "|",

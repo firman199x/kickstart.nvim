@@ -30,7 +30,6 @@ do
 	vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 	vim.o.inccommand = "split"
 	vim.o.cursorline = true
-	-- vim.o.scrolloff = 10
 	vim.o.confirm = true
 
 	vim.o.wrap = false
@@ -237,30 +236,6 @@ local function gitbrowse()
 end
 vim.keymap.set("n", "<leader>gh", gitbrowse, { desc = "Open on [G]it[H]ub" })
 vim.api.nvim_create_user_command("GitBrowse", gitbrowse, {})
-
-
--- [[ Colorscheme ]]
--- You can easily change to a different colorscheme.
--- Change the name of the colorscheme plugin below, and then
--- change the command under that to load whatever the name of that colorscheme is.
---
--- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
---
-vim.cmd.colorscheme 'catppuccin'
-
-vim.pack.add { gh 'folke/tokyonight.nvim' }
--- require('tokyonight').setup {
---     styles = {
---         -- comments = { italic = false }, -- Disable italics in comments
---     },
--- -- }
--- vim.cmd.colorscheme 'tokyonight-night'
-
-
-vim.pack.add { gh 'sainnhe/gruvbox-material' }
--- vim.g.gruvbox_contrast_dark = 'hard'
--- vim.g.gruvboc_invert_selection = '0'
--- vim.cmd.colorscheme 'gruvbox-material'
 
 -- ============================================================
 -- SECTION 5: SEARCH & NAVIGATION

@@ -16,5 +16,12 @@ jobs:
           neovim: true
           version: stable
 
+      - name: Check formatting
+        uses: JohnnyMorganz/stylua-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: latest
+          args: --check .
+
       - name: Run startup smoke test
         run: nvim --headless -u init.lua '+qa'

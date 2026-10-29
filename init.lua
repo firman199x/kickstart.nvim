@@ -23,7 +23,7 @@ do
 	vim.g.maplocalleader = " "
 	vim.g.have_nerd_font = true
 
-    vim.o.termguicolors = true
+	vim.o.termguicolors = true
 	vim.o.number = true
 	vim.o.mouse = "a"
 	vim.o.showmode = false
@@ -47,10 +47,10 @@ do
 
 	vim.o.wrap = false
 
-  vim.opt.tabstop = 4      -- Number of spaces that a <Tab> in the file counts for
-  vim.opt.shiftwidth = 4   -- Size of an indent
-  vim.opt.softtabstop = 4  -- Number of spaces that a <Tab> counts for while performing editing operations
-  vim.opt.expandtab = true -- Convert tabs to spaces
+	vim.opt.tabstop = 4 -- Number of spaces that a <Tab> in the file counts for
+	vim.opt.shiftwidth = 4 -- Size of an indent
+	vim.opt.softtabstop = 4 -- Number of spaces that a <Tab> counts for while performing editing operations
+	vim.opt.expandtab = true -- Convert tabs to spaces
 end
 
 -- Consistent diagnostics presentation.
@@ -65,18 +65,21 @@ vim.diagnostic.config({
 
 require("kickstart.keymaps")
 
-
 local gh = require("kickstart.util").gh
 
 local function gitbrowse()
 	local git_root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("%s+$", "")
-	if git_root == "" then return vim.notify("Not in a git repo", vim.log.levels.WARN) end
+	if git_root == "" then
+		return vim.notify("Not in a git repo", vim.log.levels.WARN)
+	end
 
 	local file = vim.fn.expand("%:p")
 	local rel = file:sub(#git_root + 2)
 	local line = vim.fn.line(".")
 	local branch = vim.fn.system("git rev-parse --abbrev-ref HEAD 2>/dev/null"):gsub("%s+$", "")
-	if branch == "" then branch = "HEAD" end
+	if branch == "" then
+		branch = "HEAD"
+	end
 
 	local remote = vim.fn.system("git remote get-url origin 2>/dev/null"):gsub("%s+$", "")
 	local repo_path = remote:gsub("^git@github%.com:", ""):gsub("^https://github%.com/", ""):gsub("%.git$", "")

@@ -3,11 +3,10 @@
 -- ============================================================================
 
 vim.pack.add({
-    {
-        src = "https://github.com/sainnhe/gruvbox-material",
-    },
+	{
+		src = "https://github.com/sainnhe/gruvbox-material",
+	},
 })
-
 
 -- ============================================================================
 -- Gruvbox Material
@@ -17,52 +16,51 @@ vim.g.gruvbox_contrast_dark = "hard"
 vim.g.gruvbox_invert_selection = 0
 
 function GodMod()
-    vim.cmd("hi clear")
+	vim.cmd("hi clear")
 
-    local bg = "#000000"
-    local fg = "#00ff00"
+	local bg = "#000000"
+	local fg = "#00ff00"
 
-    for hl_group, attrs in pairs(vim.api.nvim_get_hl(0, {})) do
-        if attrs.fg then
-            attrs.fg = fg
-        end
+	for hl_group, attrs in pairs(vim.api.nvim_get_hl(0, {})) do
+		if attrs.fg then
+			attrs.fg = fg
+		end
 
-        if attrs.bg then
-            attrs.bg = bg
-        end
+		if attrs.bg then
+			attrs.bg = bg
+		end
 
-        vim.api.nvim_set_hl(0, hl_group, attrs)
-    end
+		vim.api.nvim_set_hl(0, hl_group, attrs)
+	end
 
-    vim.api.nvim_set_hl(0, "Visual", {
-        bg = "#222222",
-    })
+	vim.api.nvim_set_hl(0, "Visual", {
+		bg = "#222222",
+	})
 
-    vim.api.nvim_set_hl(0, "CursorLine", {
-        bg = "#002200",
-    })
+	vim.api.nvim_set_hl(0, "CursorLine", {
+		bg = "#002200",
+	})
 
-    vim.api.nvim_set_hl(0, "Search", {
-        fg = "#00ffff",
-        bg = "none",
-    })
+	vim.api.nvim_set_hl(0, "Search", {
+		fg = "#00ffff",
+		bg = "none",
+	})
 
-    vim.api.nvim_set_hl(0, "CurSearch", {
-        fg = "#00ffff",
-        bg = "none",
-    })
+	vim.api.nvim_set_hl(0, "CurSearch", {
+		fg = "#00ffff",
+		bg = "none",
+	})
 
-    vim.api.nvim_set_hl(0, "IncSearch", {
-        fg = "#00ffff",
-        bg = "none",
-    })
+	vim.api.nvim_set_hl(0, "IncSearch", {
+		fg = "#00ffff",
+		bg = "none",
+	})
 end
 
-
 function MyGruv1()
-    vim.cmd.colorscheme("gruvbox-material")
+	vim.cmd.colorscheme("gruvbox-material")
 
-    vim.cmd([[
+	vim.cmd([[
         highlight CurrentWord guifg=#51a0cf guibg=none
         hi NormalNC guibg=#121212
         hi Normal guibg=#121212
@@ -143,7 +141,5 @@ function MyGruv1()
     ]])
 end
 
-
 -- Use MyGruv1
 MyGruv1()
-

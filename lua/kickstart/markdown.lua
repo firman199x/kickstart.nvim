@@ -1,34 +1,34 @@
 local gh = function(repo)
-  return "https://github.com/" .. repo
+	return "https://github.com/" .. repo
 end
 
 vim.pack.add({
-  gh("epwalsh/obsidian.nvim"),
-  gh("nvim-lua/plenary.nvim"),
-  gh("OXY2DEV/markview.nvim"),
-  gh("tadmccorkle/markdown.nvim"),
+	gh("epwalsh/obsidian.nvim"),
+	gh("nvim-lua/plenary.nvim"),
+	gh("OXY2DEV/markview.nvim"),
+	gh("tadmccorkle/markdown.nvim"),
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "markdown",
-  callback = function()
-    local ok, treesitter = pcall(require, "nvim-treesitter.configs")
-    if ok then
-      treesitter.setup({
-        ensure_installed = { "markdown", "markdown_inline" },
-        auto_install = true,
-        highlight = { enable = true },
-      })
-    end
-  end,
+	pattern = "markdown",
+	callback = function()
+		local ok, treesitter = pcall(require, "nvim-treesitter.configs")
+		if ok then
+			treesitter.setup({
+				ensure_installed = { "markdown", "markdown_inline" },
+				auto_install = true,
+				highlight = { enable = true },
+			})
+		end
+	end,
 })
 
-require('obsidian').setup({
-  workspaces = {
-    { name = "personal", path = "~/vaults/personal" },
-    { name = "work", path = "~/vaults/work" },
-  },
-  ui = { enable = false },
+require("obsidian").setup({
+	workspaces = {
+		{ name = "personal", path = "~/vaults/personal" },
+		{ name = "work", path = "~/vaults/work" },
+	},
+	ui = { enable = false },
 })
 vim.keymap.set("n", "<leader>ot", "<cmd>ObsidianToday<cr>", { silent = true, noremap = true })
 vim.keymap.set("n", "<leader>oy", "<cmd>ObsidianYesterday<cr>", { silent = true, noremap = true })
@@ -38,19 +38,18 @@ vim.keymap.set("n", "gd", "<cmd>ObsidianFollowLink<cr>", { silent = true, norema
 vim.keymap.set("n", "gt", "<cmd>ObsidianTags<cr>", { silent = true, noremap = true })
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "markdown",
-  callback = function()
-    local presets = require 'markview.presets'
-    ---@diagnostic disable: missing-fields
-    require('markview').setup {
-      markdown = {
-        headings = presets.headings.glow,
-        horizontal_rules = presets.horizontal_rules.dotted,
-        tables = presets.tables.rounded,
-      },
-    }
-    ---@diagnostic enable: missing-fields
-    require('markdown').setup()
-  end,
+	pattern = "markdown",
+	callback = function()
+		local presets = require("markview.presets")
+		---@diagnostic disable: missing-fields
+		require("markview").setup({
+			markdown = {
+				headings = presets.headings.glow,
+				horizontal_rules = presets.horizontal_rules.dotted,
+				tables = presets.tables.rounded,
+			},
+		})
+		---@diagnostic enable: missing-fields
+		require("markdown").setup()
+	end,
 })
-

@@ -15,7 +15,9 @@ do
 		callback = function(ev)
 			local name, kind = ev.data.spec.name, ev.data.kind
 			if name == "fff" and (kind == "install" or kind == "update") then
-				if not ev.data.active then vim.cmd.packadd("fff") end
+				if not ev.data.active then
+					vim.cmd.packadd("fff")
+				end
 				require("fff.download").download_or_build_binary()
 			end
 		end,
@@ -58,8 +60,15 @@ do
 		require("fff").live_grep({ query = query })
 	end
 
-	vim.keymap.set({ "n", "x" }, "<F5><F5>", grep_current_word_or_selection, { desc = "Search current word / selection", silent = true })
-	vim.keymap.set("n", "<leader>ff", function() require("fff").find_files() end, { desc = "[F]ind [F]iles" })
+	vim.keymap.set(
+		{ "n", "x" },
+		"<F5><F5>",
+		grep_current_word_or_selection,
+		{ desc = "Search current word / selection", silent = true }
+	)
+	vim.keymap.set("n", "<leader>ff", function()
+		require("fff").find_files()
+	end, { desc = "[F]ind [F]iles" })
 	vim.keymap.set("n", "<leader>fg", function()
 		local git_root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("%s+$", "")
 		if git_root == "" then
@@ -68,7 +77,9 @@ do
 		end
 		require("fff").find_files({ cwd = git_root, title = "Grep (Git Root)" })
 	end, {})
-	vim.keymap.set("n", "<leader>/", function() require("fff").live_grep() end, { desc = "[S]earch by [G]rep" })
+	vim.keymap.set("n", "<leader>/", function()
+		require("fff").live_grep()
+	end, { desc = "[S]earch by [G]rep" })
 	vim.keymap.set("n", "<leader>//", function()
 		local git_root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("%s+$", "")
 		if git_root == "" then

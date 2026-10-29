@@ -102,7 +102,12 @@ do
 			vim.api.nvim_command('silent !explorer.exe "$(wslpath -w "$(realpath %:p:h)")"')
 		end
 	end
-	vim.keymap.set("n", "<space><space>n", open_file_location, { silent = true, desc = "Open file location in explorer" })
+	vim.keymap.set(
+		"n",
+		"<space><space>n",
+		open_file_location,
+		{ silent = true, desc = "Open file location in explorer" }
+	)
 
 	local function append_current_word_to_search()
 		local current_word = vim.fn.expand("<cword>")
@@ -117,7 +122,12 @@ do
 		vim.fn.setreg("/", search_pattern)
 		vim.cmd("set hls")
 	end
-	vim.keymap.set("n", "<F1>", append_current_word_to_search, { noremap = true, silent = true, desc = "Append current word to search" })
+	vim.keymap.set(
+		"n",
+		"<F1>",
+		append_current_word_to_search,
+		{ noremap = true, silent = true, desc = "Append current word to search" }
+	)
 
 	-- Diagnostic Config & Keymaps
 	--  See `:help vim.diagnostic.Opts`
@@ -163,16 +173,16 @@ do
 		desc = "Highlight when yanking (copying) text",
 		group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
 		callback = function()
-			vim.hl.on_yank({higroup='DiffAdd',timeout=800})
+			vim.hl.on_yank({ higroup = "DiffAdd", timeout = 800 })
 		end,
 	})
 
-    vim.api.nvim_create_autocmd("ModeChanged", {
+	vim.api.nvim_create_autocmd("ModeChanged", {
 		desc = "EnableRelativeLineNumbers",
-        group = vim.api.nvim_create_augroup("EnableRelativeLineNumbers", { clear = true, }),
-        pattern = "*",
-        callback = function()
-            vim.wo.relativenumber = vim.fn.mode() ~= "n"
-        end,
-    })
+		group = vim.api.nvim_create_augroup("EnableRelativeLineNumbers", { clear = true }),
+		pattern = "*",
+		callback = function()
+			vim.wo.relativenumber = vim.fn.mode() ~= "n"
+		end,
+	})
 end

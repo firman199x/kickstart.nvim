@@ -42,7 +42,25 @@ do
 			require("mini.extra").pickers.lsp({ scope = scope })
 		end
 	end
-	vim.keymap.set("n", "<F5><F5>", function() require('fff').live_grep_under_cursor() end, { desc = "Search current word / selection" })
+	local grep_current_word_or_selection = function()
+		local mode = vim.fn.mode()
+		local query
+		if mode == "v" or mode == "V" or mode == "\22" then
+			local start_pos = vim.fn.getpos("v")
+			local end_pos = vim.fn.getpos(".")
+			vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+			local ok, region = pcall(vim.fn.getregion, start_pos, end_pos)
+			if ok and type(region) == "table" and #region > 0 then
+				query = table.concat(region, " ")
+			end
+		end
+		if not query or query == "" then
+			query = vim.fn.expand("<cword>")
+		end
+		require("fff").live_grep({ query = query })
+	end
+
+	vim.keymap.set({ "n", "x" }, "<F5><F5>", grep_current_word_or_selection, { desc = "Search current word / selection", silent = true })
 	vim.keymap.set("n", "<leader>ff", function() require("fff").find_files() end, { desc = "[F]ind [F]iles" })
 	vim.keymap.set("n", "<leader>fg", function()
 		local git_root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("%s+$", "")

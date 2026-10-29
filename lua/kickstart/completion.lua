@@ -10,7 +10,7 @@ local ls = require("luasnip")
 ls.setup({})
 
 require("luasnip.loaders.from_vscode").lazy_load({ exclude = { "cpp", "vue" } })
-require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/.lua_snippet" })
+require("luasnip.loaders.from_vscode").lazy_load({ paths = vim.fn.stdpath("config") .. "/.lua_snippet" })
 
 vim.keymap.set({ "i", "s" }, "<C-l>", function()
 	if ls.expand_or_locally_jumpable() then
@@ -25,7 +25,7 @@ end, { desc = "Snippet: jump backward" })
 
 vim.pack.add({ gh("chrisgrieser/nvim-scissors") })
 require("scissors").setup({
-	snippetDir = "~/.config/nvim/.lua_snippet",
+	snippetDir = vim.fn.stdpath("config") .. "/.lua_snippet",
 })
 vim.keymap.set("n", "<leader>se", function()
 	require("scissors").editSnippet()
@@ -62,9 +62,4 @@ require("blink.cmp").setup({
 vim.pack.add({ "https://github.com/tpope/vim-fugitive" })
 vim.keymap.set("n", "<tab><tab>l", "3X", { noremap = true, silent = true })
 vim.keymap.set("n", "<tab><tab>h", "2X", { noremap = true, silent = true })
-vim.api.nvim_create_autocmd("CmdlineEnter", {
-	pattern = ":Git",
-	callback = function()
-		vim.cmd("silent! LspStop")
-	end,
-})
+-- Keep LSP running during Git commands; stopping it globally caused stale diagnostics.

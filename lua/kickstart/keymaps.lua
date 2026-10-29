@@ -94,7 +94,7 @@ do
 		[[:<C-u>let @/=getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]<CR>:set hls<CR>]],
 		{ silent = true }
 	)
-	function OpenFileLocation()
+	local function open_file_location()
 		local system = vim.loop.os_uname().sysname
 		if system == "Windows_NT" then
 			vim.api.nvim_command("silent !start explorer /select,%:p")
@@ -102,9 +102,9 @@ do
 			vim.api.nvim_command('silent !explorer.exe "$(wslpath -w "$(realpath %:p:h)")"')
 		end
 	end
-	vim.keymap.set("n", "<space><space>n", ":lua OpenFileLocation()<cr>", { silent = true })
+	vim.keymap.set("n", "<space><space>n", open_file_location, { silent = true, desc = "Open file location in explorer" })
 
-	function AppendCurrentWordToSearch()
+	local function append_current_word_to_search()
 		local current_word = vim.fn.expand("<cword>")
 		local search_pattern = vim.fn.getreg("/")
 
@@ -117,7 +117,7 @@ do
 		vim.fn.setreg("/", search_pattern)
 		vim.cmd("set hls")
 	end
-	vim.keymap.set("n", "<F1>", [[:lua AppendCurrentWordToSearch()<CR>]], { noremap = true })
+	vim.keymap.set("n", "<F1>", append_current_word_to_search, { noremap = true, silent = true, desc = "Append current word to search" })
 
 	-- Diagnostic Config & Keymaps
 	--  See `:help vim.diagnostic.Opts`

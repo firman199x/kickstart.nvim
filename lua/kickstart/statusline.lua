@@ -81,7 +81,7 @@ lualine.setup {
 vim.pack.add { 'https://github.com/romgrk/barbar.nvim' }
 vim.g.barbar_auto_setup = false
 
-function SmartClose()
+local function smart_close()
   local current_win = vim.api.nvim_get_current_win()
   local current_buf = vim.api.nvim_win_get_buf(current_win)
   local wins = vim.api.nvim_tabpage_list_wins(0)
@@ -109,7 +109,7 @@ function SmartClose()
   end
 end
 
-function CloseAllExceptCurrentWindow()
+local function close_all_except_current_window()
   local current_win = vim.api.nvim_get_current_win()
   local all_wins = vim.api.nvim_list_wins()
   for _, win in ipairs(all_wins) do
@@ -124,8 +124,8 @@ vim.keymap.set('n', '<C-Down>', '<cmd>BufferMovePrevious<CR>', { noremap = true,
 vim.keymap.set('n', '<C-Up>', '<cmd>BufferMoveNext<CR>', { noremap = true, silent = false })
 vim.keymap.set('n', '<C-Left>', '<cmd>BufferPrevious<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<C-Right>', '<cmd>BufferNext<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', 'ZZ', ':lua SmartClose()<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<space>xc', ':lua CloseAllExceptCurrentWindow()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', 'ZZ', smart_close, { noremap = true, silent = true, desc = "Smart close current buffer/window" })
+vim.keymap.set('n', '<space>xc', close_all_except_current_window, { noremap = true, silent = true, desc = "Close all except current window" })
 vim.keymap.set('n', '<space>sd', ':noautocmd BufferCloseAllButVisible<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<BS>j', ':BufferGoto 1<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<BS>k', ':BufferGoto 2<CR>', { noremap = true, silent = true })

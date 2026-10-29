@@ -4,6 +4,19 @@
 -- SECTION 1: OPTIONS
 -- Core Neovim settings, leaders, options, basic keymaps, basic autocmds
 -- ============================================================
+-- Disable a few unused built-in plugins to keep startup lean.
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrwSettings = 1
+vim.g.loaded_netrwFileHandlers = 1
+vim.g.loaded_gzip = 1
+vim.g.loaded_tar = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_zip = 1
+vim.g.loaded_zipPlugin = 1
+vim.g.loaded_tohtml = 1
+vim.g.loaded_tutor = 1
+
 do
 	vim.loader.enable()
 	vim.g.mapleader = " "
@@ -39,6 +52,16 @@ do
   vim.opt.softtabstop = 4  -- Number of spaces that a <Tab> counts for while performing editing operations
   vim.opt.expandtab = true -- Convert tabs to spaces
 end
+
+-- Consistent diagnostics presentation.
+vim.diagnostic.config({
+	virtual_text = { spacing = 2, prefix = "●" },
+	signs = true,
+	underline = true,
+	update_in_insert = false,
+	severity_sort = true,
+	float = { border = "rounded", source = true },
+})
 
 require("kickstart.keymaps")
 

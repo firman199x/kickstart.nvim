@@ -141,6 +141,9 @@ vim.keymap.set("n", "<BS>k", ":BufferGoto 2<CR>", { noremap = true, silent = tru
 vim.keymap.set("n", "<BS>l", ":BufferGoto 3<CR>", { noremap = true, silent = true, desc = "<BS>l" })
 vim.keymap.set("n", "<BS>;", ":BufferGoto 4<CR>", { noremap = true, silent = true, desc = "<BS>;" })
 
+require("mini.icons").setup()
+require("mini.icons").mock_nvim_web_devicons()
+
 require("barbar").setup({
 	auto_hide = false,
 	clickable = true,

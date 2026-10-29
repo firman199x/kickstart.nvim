@@ -36,8 +36,17 @@ Each module is independent and can be disabled by removing its `require(...)` li
 ## Useful commands
 
 - `:checkhealth` - verify Neovim and plugins
+- `:checkhealth kickstart` - verify this configuration's dependencies
 - `:Mason` - manage language servers/formatters
 - `:LspInfo` - inspect attached LSP clients
+
+## Reproducibility
+
+- This config targets Neovim 0.12+.
+- Plugin versions are managed by `vim.pack`.
+- For reproducible installs, track `nvim-pack-lock.json` in version control.
+- Run `scripts/check-deps.sh` before first launch.
+- Run `scripts/benchmark.sh` to measure startup time.
 
 ## Notes
 

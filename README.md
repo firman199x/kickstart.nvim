@@ -4,7 +4,7 @@ A modular Neovim configuration built on `vim.pack`, LSP, blink.cmp, mini.nvim, a
 
 ## Requirements
 
-- Neovim 0.11+ (this config uses `vim.pack` and `vim.lsp.config`)
+- Neovim 0.12+ (this config uses `vim.pack` and `vim.lsp.config`)
 - Git
 - A Nerd Font (optional, but recommended)
 - `ripgrep` and `fd` for fast search

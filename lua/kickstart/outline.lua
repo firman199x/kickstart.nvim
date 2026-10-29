@@ -1,4 +1,4 @@
-vim.pack.add({ "https://github.com/hedyhli/outline.nvim" })
+require("kickstart.plugins").load("outline")
 require("outline").setup({
 	show_cursorline = true,
 	outline_items = {

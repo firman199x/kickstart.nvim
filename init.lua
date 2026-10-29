@@ -100,7 +100,7 @@ require("kickstart.lsp")
 
 require("kickstart.completion")
 
-vim.pack.add({ gh("echasnovski/mini.nvim") })
+require("kickstart.plugins").load("init")
 
 -- Load filetype-specific modules lazily to keep startup lean.
 vim.api.nvim_create_autocmd("FileType", {

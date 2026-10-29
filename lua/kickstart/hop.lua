@@ -1,6 +1,4 @@
-vim.pack.add({
-	{ src = "https://github.com/Borber/hop.nvim", enabled = false },
-})
+require("kickstart.plugins").load("hop")
 
 require("hop").setup({
 	multi_windows = false,

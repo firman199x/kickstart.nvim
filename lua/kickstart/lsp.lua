@@ -131,12 +131,7 @@ do
 		},
 	}
 
-	vim.pack.add({
-		gh("neovim/nvim-lspconfig"),
-		gh("mason-org/mason.nvim"),
-		gh("mason-org/mason-lspconfig.nvim"),
-		gh("WhoIsSethDaniel/mason-tool-installer.nvim"),
-	})
+	require("kickstart.plugins").load("lsp")
 
 	require("mason").setup({})
 	require("mason-tool-installer").setup({ ensure_installed = vim.tbl_keys(servers) })

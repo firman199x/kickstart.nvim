@@ -1,13 +1,4 @@
-local gh = function(repo)
-	return "https://github.com/" .. repo
-end
-
-vim.pack.add({
-	gh("epwalsh/obsidian.nvim"),
-	gh("nvim-lua/plenary.nvim"),
-	gh("OXY2DEV/markview.nvim"),
-	gh("tadmccorkle/markdown.nvim"),
-})
+require("kickstart.plugins").load("markdown")
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "markdown",

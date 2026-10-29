@@ -1,4 +1,4 @@
-vim.pack.add({ "https://github.com/akinsho/toggleterm.nvim" })
+require("kickstart.plugins").load("terminal")
 
 require("toggleterm").setup({
 	hide_numbers = false,

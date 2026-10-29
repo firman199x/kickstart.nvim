@@ -1,8 +1,6 @@
 local gh = require("kickstart.util").gh
 
-vim.pack.add({ { src = gh("L3MON4D3/LuaSnip"), version = vim.version.range("2.*") } })
-
-vim.pack.add({ gh("rafamadriz/friendly-snippets") })
+require("kickstart.plugins").load("completion")
 
 local ls = require("luasnip")
 ls.setup({})
@@ -21,7 +19,6 @@ vim.keymap.set({ "i", "s" }, "<C-h>", function()
 	end
 end, { desc = "Snippet: jump backward" })
 
-vim.pack.add({ gh("chrisgrieser/nvim-scissors") })
 require("scissors").setup({
 	snippetDir = vim.fn.stdpath("config") .. "/.lua_snippet",
 })
@@ -32,7 +29,6 @@ vim.keymap.set({ "n", "x" }, "<leader>sa", function()
 	require("scissors").addNewSnippet()
 end, { desc = "Snippet: [A]dd" })
 
-vim.pack.add({ { src = gh("saghen/blink.cmp"), version = vim.version.range("1.*") } })
 require("blink.cmp").setup({
 	keymap = {
 		["<C-j>"] = { "select_next", "fallback" },
@@ -57,7 +53,6 @@ require("blink.cmp").setup({
 	},
 })
 
-vim.pack.add({ "https://github.com/tpope/vim-fugitive" })
 vim.keymap.set("n", "<tab><tab>l", "3X", { noremap = true, silent = true })
 vim.keymap.set("n", "<tab><tab>h", "2X", { noremap = true, silent = true })
 -- Keep LSP running during Git commands; stopping it globally caused stale diagnostics.

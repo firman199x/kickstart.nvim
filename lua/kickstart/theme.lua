@@ -2,11 +2,7 @@
 -- Plugins
 -- ============================================================================
 
-vim.pack.add({
-	{
-		src = "https://github.com/sainnhe/gruvbox-material",
-	},
-})
+require("kickstart.plugins").load("theme")
 
 -- ============================================================================
 -- Gruvbox Material

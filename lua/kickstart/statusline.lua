@@ -1,4 +1,4 @@
-vim.pack.add({ "https://github.com/nvim-lualine/lualine.nvim" })
+require("kickstart.plugins").load("statusline")
 
 local lualine = require("lualine")
 
@@ -78,7 +78,6 @@ lualine.setup({
 	},
 })
 
-vim.pack.add({ "https://github.com/romgrk/barbar.nvim" })
 vim.g.barbar_auto_setup = false
 
 local function smart_close()

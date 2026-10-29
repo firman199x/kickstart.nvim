@@ -5,10 +5,7 @@ local gh = require("kickstart.util").gh
 -- fff for file finding/grep, mini.pick for LSP pickers & ui-select
 -- ============================================================
 do
-	vim.pack.add({
-		gh("dmtrKovalenko/fff"),
-		gh("echasnovski/mini.nvim"),
-	})
+	require("kickstart.plugins").load("search")
 
 	vim.api.nvim_create_autocmd("PackChanged", {
 		group = vim.api.nvim_create_augroup("fff-build", { clear = true }),

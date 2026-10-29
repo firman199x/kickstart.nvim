@@ -118,11 +118,39 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
-require("kickstart.outline")
-require("kickstart.file-tree")
 require("kickstart.hop")
 require("kickstart.statusline")
-require("kickstart.terminal")
 require("kickstart.mini")
+
+-- Lazy-load heavier UI modules on first use.
+vim.keymap.set("n", "<F3>", function()
+	require("kickstart.outline")
+	vim.cmd("Outline")
+end, { desc = "Toggle Outline" })
+
+vim.keymap.set("n", "<C-n>", function()
+	require("kickstart.file-tree")
+	vim.cmd("NvimTreeToggle")
+end, { desc = "Toggle NvimTree" })
+
+local load_terminal = function()
+	require("kickstart.terminal")
+end
+vim.keymap.set("n", "<F10>", function()
+	load_terminal()
+	vim.cmd("ToggleTerm direction=horizontal size=15")
+end, { desc = "Horizontal terminal" })
+vim.keymap.set("n", "<C-b>", function()
+	load_terminal()
+	vim.cmd('TermExec cmd="wcompile"')
+end, { desc = "Run wcompile" })
+vim.api.nvim_create_user_command("VTerm", function()
+	load_terminal()
+	vim.cmd("ToggleTerm direction=vertical size=80")
+end, {})
+vim.api.nvim_create_user_command("HTerm", function()
+	load_terminal()
+	vim.cmd("ToggleTerm direction=horizontal size=80")
+end, {})
 
 require("kickstart.theme")

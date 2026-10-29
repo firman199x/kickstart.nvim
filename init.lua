@@ -66,9 +66,7 @@ vim.diagnostic.config({
 require("kickstart.keymaps")
 
 
-local function gh(repo)
-	return "https://github.com/" .. repo
-end
+local gh = require("kickstart.util").gh
 
 local function gitbrowse()
 	local git_root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("%s+$", "")

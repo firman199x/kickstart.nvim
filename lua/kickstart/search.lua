@@ -85,7 +85,7 @@ do
 		callback = function(event)
 			local buf = event.buf
 			vim.keymap.set("n", "gr", builtin_lsp("references"), { buffer = buf, desc = "[G]oto [R]eferences" })
-			vim.keymap.set("n", "gd", builtin_lsp("definition"), { buffer = buf, desc = "[G]oto [D]efinition" })
+			vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = buf, desc = "[G]oto [D]efinition" })
 		end,
 	})
 end

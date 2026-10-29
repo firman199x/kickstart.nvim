@@ -101,13 +101,28 @@ require("kickstart.completion")
 
 vim.pack.add({ gh("echasnovski/mini.nvim") })
 
-require("kickstart.cpp_lsp")
+-- Load filetype-specific modules lazily to keep startup lean.
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "c", "cpp", "objc", "objcpp", "cuda" },
+	once = true,
+	callback = function()
+		require("kickstart.cpp_lsp")
+	end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "markdown",
+	once = true,
+	callback = function()
+		require("kickstart.markdown")
+	end,
+})
+
 require("kickstart.outline")
 require("kickstart.file-tree")
 require("kickstart.hop")
 require("kickstart.statusline")
 require("kickstart.terminal")
-require("kickstart.markdown")
 require("kickstart.mini")
 
 require("kickstart.theme")

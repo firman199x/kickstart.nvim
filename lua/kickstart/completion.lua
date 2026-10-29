@@ -53,6 +53,6 @@ require("blink.cmp").setup({
 	},
 })
 
-vim.keymap.set("n", "<tab><tab>l", "3X", { noremap = true, silent = true })
-vim.keymap.set("n", "<tab><tab>h", "2X", { noremap = true, silent = true })
+vim.keymap.set("n", "<tab><tab>l", "3X", { noremap = true, silent = true, desc = "<tab><tab>l" })
+vim.keymap.set("n", "<tab><tab>h", "2X", { noremap = true, silent = true, desc = "<tab><tab>h" })
 -- Keep LSP running during Git commands; stopping it globally caused stale diagnostics.

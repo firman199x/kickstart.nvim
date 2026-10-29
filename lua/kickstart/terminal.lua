@@ -13,11 +13,11 @@ vim.keymap.set("n", "<F10>", "<cmd>ToggleTerm direction=horizontal size=15<CR>",
 
 vim.api.nvim_create_autocmd("TermOpen", {
 	callback = function()
-		vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], { buffer = 0 })
-		vim.keymap.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], { buffer = 0 })
-		vim.keymap.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], { buffer = 0 })
-		vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], { buffer = 0 })
-		vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], { buffer = 0 })
+		vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], { buffer = 0, desc = "<esc>" })
+		vim.keymap.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], { buffer = 0, desc = "<C-h>" })
+		vim.keymap.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], { buffer = 0, desc = "<C-j>" })
+		vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], { buffer = 0, desc = "<C-k>" })
+		vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], { buffer = 0, desc = "<C-l>" })
 	end,
 })
 

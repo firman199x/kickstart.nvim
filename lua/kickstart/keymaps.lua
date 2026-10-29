@@ -5,94 +5,99 @@
 do
 	-- [[ Basic Keymaps ]]
 	--  See `:help vim.keymap.set()`
-	vim.keymap.set("n", "zx", "zt")
+	vim.keymap.set("n", "zx", "zt", { desc = "Scroll current line to top" })
 
-	vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-	vim.keymap.set("n", "<C-q>", ":qa<CR>", { silent = true })
-	vim.keymap.set("n", "<F4>", "<C-^>", { silent = true })
-	vim.keymap.set("n", "<BS>u", "<C-^>", { silent = true })
-	vim.keymap.set("n", "<BS>m", "<C-^>", { silent = true })
-	vim.keymap.set("n", "<C-m>", "<C-^>", { silent = true })
-	vim.keymap.set("n", "]]", "]czz", { silent = true })
-	vim.keymap.set("n", "[[", "[czz", { silent = true })
+	vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
+	vim.keymap.set("n", "<C-q>", ":qa<CR>", { silent = true, desc = "<C-q>" })
+	vim.keymap.set("n", "<F4>", "<C-^>", { silent = true, desc = "<F4>" })
+	vim.keymap.set("n", "<BS>u", "<C-^>", { silent = true, desc = "<BS>u" })
+	vim.keymap.set("n", "<BS>m", "<C-^>", { silent = true, desc = "<BS>m" })
+	vim.keymap.set("n", "<C-m>", "<C-^>", { silent = true, desc = "<C-m>" })
+	vim.keymap.set("n", "]]", "]czz", { silent = true, desc = "]]" })
+	vim.keymap.set("n", "[[", "[czz", { silent = true, desc = "[[" })
 
 	vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move focus to the left window" })
 	vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move focus to the right window" })
 	vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Move focus to the lower window" })
 	vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move focus to the upper window" })
 
-	vim.keymap.set("n", "<space>H", "<C-w>H", { silent = true })
-	vim.keymap.set("n", "<space>J", "<C-w>J", { silent = true })
-	vim.keymap.set("n", "<space>K", "<C-w>K", { silent = true })
-	vim.keymap.set("n", "<space>L", "<C-w>L", { silent = true })
+	vim.keymap.set("n", "<space>H", "<C-w>H", { silent = true, desc = "<space>H" })
+	vim.keymap.set("n", "<space>J", "<C-w>J", { silent = true, desc = "<space>J" })
+	vim.keymap.set("n", "<space>K", "<C-w>K", { silent = true, desc = "<space>K" })
+	vim.keymap.set("n", "<space>L", "<C-w>L", { silent = true, desc = "<space>L" })
 
-	vim.keymap.set("n", "<space><space>l", "gt", { silent = true })
-	vim.keymap.set("n", "<space><space>h", "gT", { silent = true })
+	vim.keymap.set("n", "<space><space>l", "gt", { silent = true, desc = "<space><space>l" })
+	vim.keymap.set("n", "<space><space>h", "gT", { silent = true, desc = "<space><space>h" })
 
-	vim.keymap.set("n", "<A-h>", ":vertical resize +10<CR>", { silent = true })
-	vim.keymap.set("n", "<A-l>", ":vertical resize -10<CR>", { silent = true })
-	vim.keymap.set("n", "<A-k>", ":resize +10<CR>", { silent = true })
-	vim.keymap.set("n", "<A-j>", ":resize -10<CR>", { silent = true })
+	vim.keymap.set("n", "<A-h>", ":vertical resize +10<CR>", { silent = true, desc = "<A-h>" })
+	vim.keymap.set("n", "<A-l>", ":vertical resize -10<CR>", { silent = true, desc = "<A-l>" })
+	vim.keymap.set("n", "<A-k>", ":resize +10<CR>", { silent = true, desc = "<A-k>" })
+	vim.keymap.set("n", "<A-j>", ":resize -10<CR>", { silent = true, desc = "<A-j>" })
 
-	vim.keymap.set("n", "<C-o>", "<C-o>zz", { silent = true })
-	vim.keymap.set("n", "<C-i>", "<C-i>zz", { silent = true })
+	vim.keymap.set("n", "<C-o>", "<C-o>zz", { silent = true, desc = "<C-o>" })
+	vim.keymap.set("n", "<C-i>", "<C-i>zz", { silent = true, desc = "<C-i>" })
 
-	vim.keymap.set("i", "{<CR>", "{<CR>}<Esc>O", { silent = true })
-	vim.keymap.set("i", "{}<CR>", "{<CR>}<Esc>O", { silent = true })
-	vim.keymap.set("i", "[]<CR>", "[<CR>]<Esc>O", { silent = true })
-	vim.keymap.set("i", "()<CR>", "()<CR>)<Esc>O", { silent = true })
+	vim.keymap.set("i", "{<CR>", "{<CR>}<Esc>O", { silent = true, desc = "{<CR>" })
+	vim.keymap.set("i", "{}<CR>", "{<CR>}<Esc>O", { silent = true, desc = "{}<CR>" })
+	vim.keymap.set("i", "[]<CR>", "[<CR>]<Esc>O", { silent = true, desc = "[]<CR>" })
+	vim.keymap.set("i", "()<CR>", "()<CR>)<Esc>O", { silent = true, desc = "()<CR>" })
 
-	vim.keymap.set("i", "()", "()<Esc>i", { silent = true })
-	vim.keymap.set("i", "{}", "{}<Esc>ha", { silent = true })
-	vim.keymap.set("i", "<>", "<><Esc>ha", { silent = true })
-	vim.keymap.set("i", "[]", "[]<Esc>ha", { silent = true })
-	vim.keymap.set("i", '""', '""<Esc>ha', { silent = true })
-	vim.keymap.set("i", '","', '","', { silent = true })
-	vim.keymap.set("i", "''", "''<Esc>ha", { silent = true })
-	vim.keymap.set("i", "','", "','", { silent = true })
+	vim.keymap.set("i", "()", "()<Esc>i", { silent = true, desc = "()" })
+	vim.keymap.set("i", "{}", "{}<Esc>ha", { silent = true, desc = "{}" })
+	vim.keymap.set("i", "<>", "<><Esc>ha", { silent = true, desc = "<>" })
+	vim.keymap.set("i", "[]", "[]<Esc>ha", { silent = true, desc = "[]" })
+	vim.keymap.set("i", '""', '""<Esc>ha', { silent = true, desc = '""' })
+	vim.keymap.set("i", '","', '","', { silent = true, desc = '","' })
+	vim.keymap.set("i", "''", "''<Esc>ha", { silent = true, desc = "''" })
+	vim.keymap.set("i", "','", "','", { silent = true, desc = "','" })
 
-	vim.keymap.set("n", ";;", "$a;<Esc>", { silent = true })
-	vim.keymap.set("i", ";;", "<Esc>$a;<Esc>", { silent = true })
-	vim.keymap.set("i", ",,", "<Esc>$a,<Esc>", { silent = true })
-	vim.keymap.set("n", ",,", "$a,<Esc>", { silent = true })
+	vim.keymap.set("n", ";;", "$a;<Esc>", { silent = true, desc = ";;" })
+	vim.keymap.set("i", ";;", "<Esc>$a;<Esc>", { silent = true, desc = ";;" })
+	vim.keymap.set("i", ",,", "<Esc>$a,<Esc>", { silent = true, desc = ",," })
+	vim.keymap.set("n", ",,", "$a,<Esc>", { silent = true, desc = ",," })
 
-	vim.keymap.set("i", "()<CR>", "()<CR>", { silent = true })
-	vim.keymap.set("i", "();", "();", { silent = true })
-	vim.keymap.set("i", "():", "():", { silent = true })
-	vim.keymap.set("i", "().", "().", { silent = true })
+	vim.keymap.set("i", "()<CR>", "()<CR>", { silent = true, desc = "()<CR>" })
+	vim.keymap.set("i", "();", "();", { silent = true, desc = "();" })
+	vim.keymap.set("i", "():", "():", { silent = true, desc = "():" })
+	vim.keymap.set("i", "().", "().", { silent = true, desc = "()." })
 
 	-- Delete Trailing Whitespace
-	vim.keymap.set("n", "<Space><BS>", [[:%s/\s\+$//e<CR>]], { silent = true })
+	vim.keymap.set("n", "<Space><BS>", [[:%s/\s\+$//e<CR>]], { silent = true, desc = "<Space><BS>" })
 
-	vim.keymap.set("v", "<Down>", "5j", { silent = true })
-	vim.keymap.set("v", "<Up>", "5k", { silent = true })
-	vim.keymap.set("n", "<Down>", "5j", { silent = true })
-	vim.keymap.set("n", "<Up>", "5k", { silent = true })
-	vim.keymap.set("n", "<Right>", "W", { silent = true })
-	vim.keymap.set("n", "<Left>", "B", { silent = true })
+	vim.keymap.set("v", "<Down>", "5j", { silent = true, desc = "<Down>" })
+	vim.keymap.set("v", "<Up>", "5k", { silent = true, desc = "<Up>" })
+	vim.keymap.set("n", "<Down>", "5j", { silent = true, desc = "<Down>" })
+	vim.keymap.set("n", "<Up>", "5k", { silent = true, desc = "<Up>" })
+	vim.keymap.set("n", "<Right>", "W", { silent = true, desc = "<Right>" })
+	vim.keymap.set("n", "<Left>", "B", { silent = true, desc = "<Left>" })
 
-	vim.keymap.set("n", "<A-n>", "<C-w>jj<CR>zz", { silent = true })
-	vim.keymap.set("n", "<A-m>", "<C-w>jk<CR>zz", { silent = true })
+	vim.keymap.set("n", "<A-n>", "<C-w>jj<CR>zz", { silent = true, desc = "<A-n>" })
+	vim.keymap.set("n", "<A-m>", "<C-w>jk<CR>zz", { silent = true, desc = "<A-m>" })
 
 	-- Retain the clipboard data when pasting using V-Mode
-	vim.keymap.set("x", "p", [["_dP]], { silent = true })
+	vim.keymap.set("x", "p", [["_dP]], { silent = true, desc = "p" })
 
-	vim.keymap.set("x", "<space>F", [[:'<,'>!jq --indent 4 .<CR>]], { silent = true })
-	vim.keymap.set("n", "<F1><F1>", [[:set list!<CR>]], { silent = true })
-	vim.keymap.set("n", "<space><space>zf", "va}zf", { silent = true })
-	vim.keymap.set("x", "<space>sn", "}i$<esc>li:<esc>ih", { silent = true })
-	vim.keymap.set("n", "zl", "40zl", { silent = true })
-	vim.keymap.set("n", "zh", "40zh", { silent = true })
-	vim.keymap.set("n", "json", ":set filetype=json<CR>", { silent = true })
-	vim.keymap.set("n", "<Del>", "<Nop>", { silent = true })
-	vim.keymap.set("n", "<space>Z", "vi}zf", { silent = true })
+	vim.keymap.set("x", "<space>F", [[:'<,'>!jq --indent 4 .<CR>]], { silent = true, desc = "<space>F" })
+	vim.keymap.set("n", "<F1><F1>", [[:set list!<CR>]], { silent = true, desc = "<F1><F1>" })
+	vim.keymap.set("n", "<space><space>zf", "va}zf", { silent = true, desc = "<space><space>zf" })
+	vim.keymap.set("x", "<space>sn", "}i$<esc>li:<esc>ih", { silent = true, desc = "<space>sn" })
+	vim.keymap.set("n", "zl", "40zl", { silent = true, desc = "zl" })
+	vim.keymap.set("n", "zh", "40zh", { silent = true, desc = "zh" })
+	vim.keymap.set("n", "json", ":set filetype=json<CR>", { silent = true, desc = "json" })
+	vim.keymap.set("n", "<Del>", "<Nop>", { silent = true, desc = "<Del>" })
+	vim.keymap.set("n", "<space>Z", "vi}zf", { silent = true, desc = "<space>Z" })
 
-	vim.keymap.set("n", "<F5>", [[:let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>]], { silent = true })
+	vim.keymap.set(
+		"n",
+		"<F5>",
+		[[:let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>]],
+		{ silent = true, desc = "<F5>" }
+	)
 	vim.keymap.set(
 		"x",
 		"<F5>",
 		[[:<C-u>let @/=getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]<CR>:set hls<CR>]],
-		{ silent = true }
+		{ silent = true, desc = "Highlight visual selection" }
 	)
 	local function open_file_location()
 		local system = vim.loop.os_uname().sysname

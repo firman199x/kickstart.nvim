@@ -119,10 +119,10 @@ local function close_all_except_current_window()
 	vim.cmd("noautocmd BufferCloseAllButCurrent")
 end
 
-vim.keymap.set("n", "<C-Down>", "<cmd>BufferMovePrevious<CR>", { noremap = true, silent = false })
-vim.keymap.set("n", "<C-Up>", "<cmd>BufferMoveNext<CR>", { noremap = true, silent = false })
-vim.keymap.set("n", "<C-Left>", "<cmd>BufferPrevious<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<C-Right>", "<cmd>BufferNext<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-Down>", "<cmd>BufferMovePrevious<CR>", { noremap = true, silent = false, desc = "<C-Down>" })
+vim.keymap.set("n", "<C-Up>", "<cmd>BufferMoveNext<CR>", { noremap = true, silent = false, desc = "<C-Up>" })
+vim.keymap.set("n", "<C-Left>", "<cmd>BufferPrevious<CR>", { noremap = true, silent = true, desc = "<C-Left>" })
+vim.keymap.set("n", "<C-Right>", "<cmd>BufferNext<CR>", { noremap = true, silent = true, desc = "<C-Right>" })
 vim.keymap.set("n", "ZZ", smart_close, { noremap = true, silent = true, desc = "Smart close current buffer/window" })
 vim.keymap.set(
 	"n",
@@ -130,11 +130,16 @@ vim.keymap.set(
 	close_all_except_current_window,
 	{ noremap = true, silent = true, desc = "Close all except current window" }
 )
-vim.keymap.set("n", "<space>sd", ":noautocmd BufferCloseAllButVisible<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<BS>j", ":BufferGoto 1<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<BS>k", ":BufferGoto 2<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<BS>l", ":BufferGoto 3<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<BS>;", ":BufferGoto 4<CR>", { noremap = true, silent = true })
+vim.keymap.set(
+	"n",
+	"<space>sd",
+	":noautocmd BufferCloseAllButVisible<CR>",
+	{ noremap = true, silent = true, desc = "<space>sd" }
+)
+vim.keymap.set("n", "<BS>j", ":BufferGoto 1<CR>", { noremap = true, silent = true, desc = "<BS>j" })
+vim.keymap.set("n", "<BS>k", ":BufferGoto 2<CR>", { noremap = true, silent = true, desc = "<BS>k" })
+vim.keymap.set("n", "<BS>l", ":BufferGoto 3<CR>", { noremap = true, silent = true, desc = "<BS>l" })
+vim.keymap.set("n", "<BS>;", ":BufferGoto 4<CR>", { noremap = true, silent = true, desc = "<BS>;" })
 
 require("barbar").setup({
 	auto_hide = false,

@@ -25,7 +25,12 @@ do
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 
 			opts.desc = "Restart LSP"
-			vim.keymap.set("n", "<space>rs", ":LspRestart<CR>", { buffer = event.buf, noremap = true })
+			vim.keymap.set(
+				"n",
+				"<space>rs",
+				":LspRestart<CR>",
+				{ buffer = event.buf, noremap = true, desc = "<space>rs" }
+			)
 
 			opts.desc = "Fix Error"
 			vim.keymap.set("n", "<space>fx", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)

@@ -21,12 +21,12 @@ require("obsidian").setup({
 	},
 	ui = { enable = false },
 })
-vim.keymap.set("n", "<leader>ot", "<cmd>ObsidianToday<cr>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>oy", "<cmd>ObsidianYesterday<cr>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>od", "<cmd>ObsidianDailies<cr>", { silent = true, noremap = true })
-vim.keymap.set("n", "<BS>", "<cmd>ObsidianBacklinks<cr>", { silent = true, noremap = true })
-vim.keymap.set("n", "gd", "<cmd>ObsidianFollowLink<cr>", { silent = true, noremap = true })
-vim.keymap.set("n", "gt", "<cmd>ObsidianTags<cr>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>ot", "<cmd>ObsidianToday<cr>", { silent = true, noremap = true, desc = "<leader>ot" })
+vim.keymap.set("n", "<leader>oy", "<cmd>ObsidianYesterday<cr>", { silent = true, noremap = true, desc = "<leader>oy" })
+vim.keymap.set("n", "<leader>od", "<cmd>ObsidianDailies<cr>", { silent = true, noremap = true, desc = "<leader>od" })
+vim.keymap.set("n", "<BS>", "<cmd>ObsidianBacklinks<cr>", { silent = true, noremap = true, desc = "<BS>" })
+vim.keymap.set("n", "gd", "<cmd>ObsidianFollowLink<cr>", { silent = true, noremap = true, desc = "gd" })
+vim.keymap.set("n", "gt", "<cmd>ObsidianTags<cr>", { silent = true, noremap = true, desc = "gt" })
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "markdown",

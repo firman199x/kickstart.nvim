@@ -89,3 +89,10 @@ This is a curated reference for the most important keybindings. Many smaller tex
 - `gd` jumps directly; `gr` opens a picker because references are usually multiple.
 - `<F5>` highlights the current word; `<F5><F5>` searches it.
 - NvimTree, Outline, and Terminal modules load lazily on first use.
+
+## Known conflicts and caveats
+
+- `<F5>` and `<F5><F5>` share a prefix, so double-F5 has a small `timeoutlen` delay.
+- Arrow keys are intentionally remapped in normal/visual mode (`<Up/Down>` move 5 lines, `<Left/Right>` move by word).
+- `<C-h/j/k/l>` are used for window navigation, which may conflict with terminal multiplexers.
+- Markdown files override `gd` for Obsidian links.

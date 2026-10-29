@@ -166,4 +166,13 @@ do
 			vim.hl.on_yank()
 		end,
 	})
+
+    vim.api.nvim_create_autocmd("ModeChanged", {
+		desc = "EnableRelativeLineNumbers",
+        group = vim.api.nvim_create_augroup("EnableRelativeLineNumbers", { clear = true, }),
+        pattern = "*",
+        callback = function()
+            vim.wo.relativenumber = vim.fn.mode() ~= "n"
+        end,
+    })
 end

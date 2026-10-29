@@ -29,7 +29,7 @@ do
 
 	require("fff").setup({
 		grep = {
-			modes = { "regex", "fuzzy", "plain" },
+			modes = { "plain", "regex", "fuzzy" },
 		},
 	})
 
@@ -42,7 +42,7 @@ do
 			require("mini.extra").pickers.lsp({ scope = scope })
 		end
 	end
-
+	vim.keymap.set("n", "<F5><F5>", function() require('fff').live_grep_under_cursor() end, { desc = "Search current word / selection" })
 	vim.keymap.set("n", "<leader>ff", function() require("fff").find_files() end, { desc = "[F]ind [F]iles" })
 	vim.keymap.set("n", "<leader>fg", function()
 		local git_root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("%s+$", "")

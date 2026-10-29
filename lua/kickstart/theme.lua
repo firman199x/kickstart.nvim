@@ -64,6 +64,7 @@ function MyGruv1()
 
     vim.cmd([[
         highlight CurrentWord guifg=#51a0cf guibg=none
+        hi NormalNC guibg=#121212
         hi Normal guibg=#121212
         hi NormalFloat guibg=none
         hi SnacksPickerMatch guifg=#00ffff guibg=none gui=bold
@@ -95,8 +96,6 @@ function MyGruv1()
         hi HopNextKey1 guibg=#002f84 guifg=#ffffff
         hi HopNextKey2 guibg=#002f84 guifg=#ffffff
         hi HopUnMatched guifg=none gui=none
-
-        hi NormalNC guibg=#1e1e1e
         hi Fg guibg=none
 
         hi CursorLineNr guibg=#2b3447 guifg=#ffaa2d
@@ -125,10 +124,10 @@ function MyGruv1()
 
         hi OutlineCurrent guibg=#003a00 gui=bold guifg=#ffffff
 
-        hi DiffText guibg=#002f84 guifg=#ffffff
-        hi DiffDelete guifg=#4b0618 guibg=#4b0618
+        hi DiffText guibg=#1f3622 guifg=none
+        hi DiffDelete guibg=#4a2324 guifg=#4a2324
         hi DiffChange guibg=none guifg=none
-        hi DiffAdd guibg=#002f84 gui=bold guifg=none
+        hi DiffAdd guibg=#1f3622 gui=bold guifg=none
 
         hi BufferInActive guibg=#2b3447
         hi BufferVisible guibg=#002977 guifg=#ffffff

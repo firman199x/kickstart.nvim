@@ -39,37 +39,53 @@ local function createClangDFile()
 	if not file then
 		return
 	end
-	file:write([[
-CompileFlags:
-  Add:
-    - '-std=c++17'
-    - '-I/home/fsukri/Dev/vendor-x64-windows/T-x64-ntvc/qt6/include'
-    - '-I/home/fsukri/Dev/vendor-x64-windows/T-x64-ntvc/gtest/include'
-    - '-I/home/fsukri/Dev/vendor-x64-windows/T-x64-ntvc/cpr/include'
-    - '-I/home/fsukri/Dev/vendor-x64-windows/T-x64-ntvc/qt6/include/QtConcurrent'
-    - '-I/home/fsukri/Dev/vendor-x64-windows/T-x64-ntvc/qt6/include/QtCore'
-    - '-I/home/fsukri/Dev/vendor-x64-windows/T-x64-ntvc/qt6/include/QtGui'
-    - '-I/home/fsukri/Dev/vendor-x64-windows/T-x64-ntvc/qt6/include/QtNetwork'
-    - '-I/home/fsukri/Dev/vendor-x64-windows/T-x64-ntvc/qt6/include/QtNetworkAuth'
-    - '-I/home/fsukri/Dev/vendor-x64-windows/T-x64-ntvc/qt6/include/QtSql'
-    - '-I/home/fsukri/Dev/vendor-x64-windows/T-x64-ntvc/qt6/include/QtWebChannel'
-    - '-I/home/fsukri/Dev/vendor-x64-windows/T-x64-ntvc/qt6/include/QtWebSockets'
-    - '-I/home/fsukri/Dev/vendor-x64-windows/T-x64-ntvc/qt6/include/QtWidgets'
-    - '-I/home/fsukri/Dev/vendor-x64-windows/T-x64-ntvc/rapidjson-1.1.0/include'
-    - '-I/home/fsukri/Downloads/vcpkg/installed/x64-windows/include'
-]])
+	local is_win = vim.fn.has("win32") == 1
+	local home = is_win and (os.getenv("USERPROFILE") or "C:/Users/Public") or (os.getenv("HOME") or "/home")
+	local vendor_base = os.getenv("KICKSTART_VENDOR_DIR")
+	if not vendor_base then
+		vendor_base = is_win and (home .. "/Dev/vendor-x64-windows/T-x64-ntvc") or "/home/fsukri/Dev/vendor-x64-windows/T-x64-ntvc"
+	end
+	vendor_base = vendor_base:gsub("\\", "/")
+	local vcpkg_include = is_win and (home .. "/Downloads/vcpkg/installed/x64-windows/include") or "/home/fsukri/Downloads/vcpkg/installed/x64-windows/include"
+	vcpkg_include = vcpkg_include:gsub("\\", "/")
 
-	local pwd = vim.fn.getcwd()
+	local lines = {
+		"CompileFlags:",
+		"  Add:",
+		"    - '-std=c++17'",
+	}
+	local function add_inc(p)
+		table.insert(lines, "    - '-I" .. p .. "'")
+	end
+	add_inc(vendor_base .. "/qt6/include")
+	add_inc(vendor_base .. "/gtest/include")
+	add_inc(vendor_base .. "/cpr/include")
+	add_inc(vendor_base .. "/qt6/include/QtConcurrent")
+	add_inc(vendor_base .. "/qt6/include/QtCore")
+	add_inc(vendor_base .. "/qt6/include/QtGui")
+	add_inc(vendor_base .. "/qt6/include/QtNetwork")
+	add_inc(vendor_base .. "/qt6/include/QtNetworkAuth")
+	add_inc(vendor_base .. "/qt6/include/QtSql")
+	add_inc(vendor_base .. "/qt6/include/QtWebChannel")
+	add_inc(vendor_base .. "/qt6/include/QtWebSockets")
+	add_inc(vendor_base .. "/qt6/include/QtWidgets")
+	add_inc(vendor_base .. "/rapidjson-1.1.0/include")
+	add_inc(vcpkg_include)
+	file:write(table.concat(lines, "\n") .. "\n")
+
+	local pwd = vim.fn.getcwd():gsub("\\", "/")
 	file:write("    - '-I" .. pwd .. "/incl'\n")
 	file:write("    - '-I" .. pwd .. "/src'\n")
 
 	local extracted_path = pwd:match("(sysdev/[^/]*/[^/]*)")
 	if extracted_path then
-		file:write("    - '-I/home/fsukri/Dev/" .. extracted_path .. "/arch/T-x64-ntvc/incl'\n")
+		local dev_base = is_win and (home .. "/Dev") or "/home/fsukri/Dev"
+		dev_base = dev_base:gsub("\\", "/")
+		file:write("    - '-I" .. dev_base .. "/" .. extracted_path .. "/arch/T-x64-ntvc/incl'\n")
 		file:write("\n")
 		file:write("Diagnostics:\n")
 		file:write("  IgnoreHeader:\n")
-		file:write("    - /home/fsukri/Dev/" .. extracted_path .. "/arch/T-x64-ntvc/incl/\n")
+		file:write("    - " .. dev_base .. "/" .. extracted_path .. "/arch/T-x64-ntvc/incl/\n")
 	end
 	file:close()
 end

@@ -102,7 +102,7 @@ do
 	local function open_file_location()
 		local system = vim.loop.os_uname().sysname
 		if system == "Windows_NT" then
-			vim.api.nvim_command("silent !start explorer /select,%:p")
+			vim.api.nvim_command('silent !start explorer /select,"' .. vim.fn.expand("%:p") .. '"')
 		elseif system == "Linux" then
 			vim.api.nvim_command('silent !explorer.exe "$(wslpath -w "$(realpath %:p:h)")"')
 		end

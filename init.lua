@@ -28,7 +28,16 @@ do
 	vim.o.mouse = "a"
 	vim.o.showmode = false
 	vim.schedule(function()
-		vim.o.clipboard = "unnamedplus"
+		if vim.fn.has("win32") == 1 then
+			-- Use "unnamedplus" only if win32yank (or equivalent) is available.
+			if vim.fn.executable("win32yank") == 1 or vim.fn.executable("win32yank.exe") == 1 then
+				vim.o.clipboard = "unnamedplus"
+			else
+				vim.o.clipboard = "unnamed"
+			end
+		else
+			vim.o.clipboard = "unnamedplus"
+		end
 	end)
 	vim.o.breakindent = true
 	vim.o.undofile = true
@@ -68,7 +77,8 @@ require("kickstart.keymaps")
 local gh = require("kickstart.util").gh
 
 local function gitbrowse()
-	local git_root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("%s+$", "")
+	local nulldev = vim.fn.has("win32") == 1 and "nul" or "/dev/null"
+	local git_root = vim.fn.system("git rev-parse --show-toplevel 2>" .. nulldev):gsub("%s+$", "")
 	if git_root == "" then
 		return vim.notify("Not in a git repo", vim.log.levels.WARN)
 	end
@@ -76,12 +86,12 @@ local function gitbrowse()
 	local file = vim.fn.expand("%:p")
 	local rel = file:sub(#git_root + 2)
 	local line = vim.fn.line(".")
-	local branch = vim.fn.system("git rev-parse --abbrev-ref HEAD 2>/dev/null"):gsub("%s+$", "")
+	local branch = vim.fn.system("git rev-parse --abbrev-ref HEAD 2>" .. nulldev):gsub("%s+$", "")
 	if branch == "" then
 		branch = "HEAD"
 	end
 
-	local remote = vim.fn.system("git remote get-url origin 2>/dev/null"):gsub("%s+$", "")
+	local remote = vim.fn.system("git remote get-url origin 2>" .. nulldev):gsub("%s+$", "")
 	local repo_path = remote:gsub("^git@github%.com:", ""):gsub("^https://github%.com/", ""):gsub("%.git$", "")
 	if repo_path == "" or repo_path == remote then
 		return vim.notify("Could not parse GitHub remote", vim.log.levels.WARN)

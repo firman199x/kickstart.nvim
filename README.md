@@ -19,6 +19,14 @@ NVIM_APPNAME=kickstart nvim
 
 On first launch, `vim.pack` installs plugins and Mason installs servers.
 
+### Windows (cmd/PowerShell)
+- Install Neovim 0.12+, Git, `ripgrep`, `fd` (e.g. via `winget` or Scoop).
+- Clone to `%LOCALAPPDATA%\\nvim` (or launch with `nvim -u C:\\path\\to\\kickstart\\init.lua`).
+- For clipboard sync, install `win32yank` (otherwise the config falls back to `unnamed`).
+- Run `scripts\\check-deps.ps1` (or the `.sh` via Git Bash) before first launch.
+- Ensure `wcompile` (if used) is a Windows executable on `PATH`.
+- Set `KICKSTART_VENDOR_DIR` to your vendor root if it is not under `%USERPROFILE%\\Dev`.
+
 ## Structure
 
 ```

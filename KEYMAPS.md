@@ -66,6 +66,17 @@ This is a curated reference for the most important keybindings. Many smaller tex
 | `<leader>oy` | n | Obsidian yesterday |
 | `<BS>` | n | Obsidian backlinks |
 
+## Atlas (pull requests & issues)
+
+| Key | Mode | Description |
+|---|---|---|
+| `<leader>at` | n | Atlas command picker |
+| `<leader>ar` | n | Review current branch's pull request |
+| `<leader>ap` | n | Pull-request dashboard (current repo) |
+| `<leader>ai` | n | Issue dashboard (current repo) |
+
+Inside Atlas buffers press `g?` for the in-buffer help (or see `:help atlas-keymaps`).
+
 ## Completion and snippets
 
 | Key | Mode | Description |

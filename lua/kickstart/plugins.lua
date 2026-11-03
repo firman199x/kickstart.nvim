@@ -92,6 +92,12 @@ M.loaders = {
 			},
 		})
 	end,
+
+	atlas = function()
+		vim.pack.add({
+			gh("emrearmagan/atlas.nvim"),
+		})
+	end,
 }
 
 function M.load(name)

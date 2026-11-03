@@ -122,6 +122,7 @@ vim.api.nvim_create_autocmd("FileType", {
 require("kickstart.hop")
 require("kickstart.statusline")
 require("kickstart.mini")
+require("kickstart.atlas")
 
 -- Lazy-load heavier UI modules on first use.
 vim.keymap.set("n", "<F3>", function()

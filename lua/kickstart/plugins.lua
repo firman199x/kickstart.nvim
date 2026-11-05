@@ -85,6 +85,12 @@ M.loaders = {
 		})
 	end,
 
+	vellum = function()
+		vim.pack.add({
+			gh("blackhat-7/vellum.nvim"),
+		})
+	end,
+
 	theme = function()
 		vim.pack.add({
 			{

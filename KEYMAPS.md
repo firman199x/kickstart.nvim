@@ -65,6 +65,8 @@ This is a curated reference for the most important keybindings. Many smaller tex
 | `<leader>ot` | n | Obsidian today |
 | `<leader>oy` | n | Obsidian yesterday |
 | `<BS>` | n | Obsidian backlinks |
+| `<leader>mp` | n | Vellum markdown preview |
+| `<leader>mz` | n | Zoom image at cursor (Vellum) |
 
 ## Completion and snippets
 
